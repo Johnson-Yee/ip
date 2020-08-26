@@ -5,7 +5,7 @@ public class Duke {
     public static void main(String[] args) {
         String userInput = new String("");
         Scanner input = new Scanner(System.in);
-        String[] currentTasks = new String[100];
+        Task[] currentTasks = new Task[100];
         int numOfTasks = 0;
 
         printSeparator();
@@ -14,17 +14,32 @@ public class Duke {
 
         while(!userInput.equals("bye")) {
             userInput = input.nextLine();
-            //Switch cases for the different user inputs
-            switch (userInput.trim()) {
+            //Split the user input to get first word which is command of the user
+            String[] splitUserInput = userInput.split(" ",2);
+
+            //Switch cases for the different user inputs based on first word of command
+            switch (splitUserInput[0]) {
+
                 case "bye":
                     exitProgram();
                     break;
 
+                // List out all the current tasks
                 case "list":
                     printSeparator();
                     for(int i = 0;i <numOfTasks; i++){
-                        System.out.println(i + "." + currentTasks[i]);
+                        System.out.println((i+1) + ".[" + currentTasks[i].getStatusIcon() +"] " + currentTasks[i].getDescription());
                     }
+                    printSeparator();
+                    break;
+
+                //Mark a completed task
+                case "done":
+                    int taskNum = Integer.parseInt(splitUserInput[1]);
+                    currentTasks[taskNum-1].setAsDone();
+                    printSeparator();
+                    System.out.println("Nice! I've marked this task as done: \n" + "[" +
+                            currentTasks[taskNum - 1].getStatusIcon() + "] " + currentTasks[taskNum - 1].getDescription());
                     printSeparator();
                     break;
 
@@ -32,7 +47,7 @@ public class Duke {
                 printSeparator();
                 System.out.println("Added: " + userInput);
                 printSeparator();
-                currentTasks[numOfTasks] = userInput;
+                currentTasks[numOfTasks] = new Task(userInput);
                 numOfTasks++;
                 }
         }
