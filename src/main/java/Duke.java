@@ -1,16 +1,38 @@
+import java.util.Scanner;
+
 public class Duke {
     public static void main(String[] args) {
-        String logo = " ____        _        \n"
-                + "|  _ \\ _   _| | _____ \n"
-                + "| | | | | | | |/ / _ \\\n"
-                + "| |_| | |_| |   <  __/\n"
-                + "|____/ \\__,_|_|\\_\\___|\n";
-        String line = "___________________________________________________";
-        System.out.println("Hello from\n" + logo);
-        System.out.println(line);
-        System.out.println("Hello! I'm Duke\nWhat can I do for you?");
-        System.out.println(line);
+        String userInput = new String("");
+        Scanner input = new Scanner(System.in);
+
+        printSeparator();
+        System.out.println("Sup! I'm Dude\nWhat can a brother do for you?");
+        printSeparator();
+
+        while(!userInput.equals("bye")) {
+            userInput = input.nextLine();
+            //Switch cases for the different user inputs
+            switch (userInput.trim()) {
+                case "bye":
+                    exitProgram();
+                    break;
+
+                default:
+                printSeparator();
+                System.out.println(userInput);
+                printSeparator();
+                }
+        }
+    }
+    //Command "bye" is given; Exit program
+    public static void exitProgram(){
+        printSeparator();
         System.out.println("Bye. Hope to see you again soon!");
+        printSeparator();
+    }
+
+    public static void printSeparator(){
+        String line = "___________________________________________________";
         System.out.println(line);
     }
 }
