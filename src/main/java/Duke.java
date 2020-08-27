@@ -36,6 +36,13 @@ public class Duke {
                 //Mark a completed task
                 case "done":
                     int taskNum = Integer.parseInt(splitUserInput[1]);
+
+                    if(taskNum <= 0 || taskNum > numOfTasks){
+                        printSeparator();
+                        System.out.println("Invalid input");
+                        printSeparator();
+                        break;
+                    }
                     currentTasks[taskNum-1].setAsDone();
                     printSeparator();
                     System.out.println("Nice! I've marked this task as done: \n" + "[" +
