@@ -1,6 +1,8 @@
 public class Task {
     protected String description;
-    protected boolean isDone;
+    protected boolean isDone; //Status of completion
+    protected char type; //Type of task
+
 
     public Task(String description) {
         this.description = description;
@@ -16,5 +18,9 @@ public class Task {
     }
     public void setAsDone(){
         isDone = true;
+    }
+
+    public char getType(){
+        return type;
     }
 }
