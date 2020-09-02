@@ -6,7 +6,7 @@ public class Duke {
     private static final Scanner input = new Scanner(System.in);
 
     public static void main(String[] args) {
-        String userInput = new String("");
+        String userInput = "";
         Task[] currentTasks = new Task[100];
         int numOfTasks = 0;
 
@@ -14,45 +14,41 @@ public class Duke {
 
         while(!userInput.equals("bye")) {
             userInput = getUserInput();
-            //Split the user input to get first word which is command of the user
             String[] splitUserInput = splitCommands(userInput);
-            //Switch cases for the different user inputs based on first word of command
+
             switch (splitUserInput[0]) {
 
                 case "bye":
                     exitProgram();
                     break;
 
-                // List out all the current tasks
                 case "list":
                     commandList(currentTasks, numOfTasks);
                     break;
 
-                //Mark a completed task
                 case "done":
                     markAsDone(currentTasks, numOfTasks, splitUserInput[1]);
                     break;
 
-                //Set a deadline
                 case "deadline":
                     numOfTasks = commandDeadline(currentTasks, numOfTasks, splitUserInput[1]);
                     break;
-                //Set an impending task
+
                 case "todo":
                     numOfTasks = commandToDo(currentTasks, numOfTasks, splitUserInput);
                     break;
-                //Create an event
+
                 case "event":
                     numOfTasks = commandEvent(currentTasks, numOfTasks, splitUserInput[1]);
                     break;
-                //Display possible commands
+
                 case "help":
                     commandHelp();
                     break;
-                //Commands that are not recognised by program
+
                 default:
                     invalidCommand();
-                }
+            }
         }
     }
 
@@ -66,7 +62,8 @@ public class Duke {
     private static void commandList(Task[] currentTasks, int numOfTasks) {
         printSeparator();
         for(int i = 0; i < numOfTasks; i++){
-            System.out.println((i+1) + "." +addBrackets(currentTasks[i].getType()) + addBrackets(currentTasks[i].getStatusIcon()) + " " + currentTasks[i].getDescription());
+            System.out.println((i+1) + "." +addBrackets(currentTasks[i].getType()) +
+                    addBrackets(currentTasks[i].getStatusIcon()) + " " + currentTasks[i].getDescription());
         }
         printSeparator();
     }
@@ -133,6 +130,7 @@ public class Duke {
         System.out.println("Sup! I'm Dude!\nWhat can a brother do for you?");
         printSeparator();
     }
+    //Function to encapsulate description with square brackets
     private static String addBrackets(String description){
         String s;
         s = "[" + description +"]";
@@ -160,14 +158,14 @@ public class Duke {
     //Function to get user input
     private static String getUserInput(){
         String inputLine = input.nextLine();
-        return inputLine;
+        return inputLine.trim();
     }
 
     private static void printSeparator(){
         String line = "___________________________________________________";
         System.out.println(line);
     }
-    //function to get words from sentence
+    //Function to get command from sentence and split sentence into 2
     private static String[] splitCommands(String userInput) {
         final String[] split = userInput.trim().split("\\s+", 2);
         return split.length == 2 ? split : new String[]{split[0], " "};
