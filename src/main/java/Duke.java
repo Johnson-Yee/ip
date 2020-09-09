@@ -274,7 +274,7 @@ public class Duke {
     }
 
     private static void printSeparator(){
-        String line = "________________________________________________________________________";
+        String line = "__________________________________________________________________________________";
         System.out.println(line);
     }
     /*Function to get command from sentence and split sentence into 2*/
