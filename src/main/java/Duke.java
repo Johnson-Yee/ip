@@ -1,3 +1,9 @@
+import Exceptions.DukeException;
+import Tasks.Deadline;
+import Tasks.Event;
+import Tasks.Task;
+import Tasks.ToDo;
+
 import java.util.Scanner;
 import java.util.Arrays;
 
@@ -90,7 +96,7 @@ public class Duke {
         printSeparator();
     }
     /**
-     * Adds a Deadline task to the currentTasks Task array
+     * Adds a Tasks.Deadline task to the currentTasks Tasks.Task array
      *
      * @param currentTasks  Tasks Array of all tasks
      * @param numOfTasks  Number of tasks
@@ -133,7 +139,7 @@ public class Duke {
         return numOfTasks;
     }
     /**
-     * Adds a ToDo task to the currentTasks Task array
+     * Adds a Tasks.ToDo task to the currentTasks Tasks.Task array
      *
      * @param currentTasks  Tasks Array of all tasks
      * @param numOfTasks  Number of tasks
@@ -162,7 +168,7 @@ public class Duke {
         return numOfTasks;
     }
     /**
-     * Adds a ToDo task to the currentTasks Task array
+     * Adds a Tasks.ToDo task to the currentTasks Tasks.Task array
      *
      * @param currentTasks  Tasks Array of all tasks
      * @param numOfTasks  Number of tasks

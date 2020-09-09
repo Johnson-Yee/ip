@@ -1,3 +1,5 @@
+package Exceptions;
+
 public class DukeException extends Exception {
     public static final String MISSING_DESCRIPTION = "Hey! The description cannot be empty";
     public static final String UNINTELLIGIBLE_COMMAND = "Sorry! You have entered an invalid command!\n For more help, type \"help\"";
