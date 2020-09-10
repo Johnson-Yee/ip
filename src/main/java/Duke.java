@@ -3,7 +3,6 @@ import Tasks.Deadline;
 import Tasks.Event;
 import Tasks.Task;
 import Tasks.ToDo;
-
 import java.util.Scanner;
 import java.util.Arrays;
 
@@ -21,7 +20,7 @@ public class Duke {
     //private static boolean hasExited = false;
     private static final Scanner input = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws DukeException {
         String userInput = "";
         Task[] currentTasks = new Task[MAX_TASKS];
         int numOfTasks = 0;
@@ -50,11 +49,7 @@ public class Duke {
                 numOfTasks = commandToDo(currentTasks, numOfTasks, splitUserInput[1]);
                 break;
             case "event":
-                try {
-                    numOfTasks = commandEvent(currentTasks, numOfTasks, splitUserInput[1]);
-                } catch (DukeException e) {
-                    e.printStackTrace();
-                }
+                numOfTasks = commandEvent(currentTasks, numOfTasks, splitUserInput[1]);
                 break;
             case "help":
                 commandHelp();
@@ -264,7 +259,7 @@ public class Duke {
     /*Command "bye" is given; Exit program*/
     private static void printExitMessage(){
         printSeparator();
-        System.out.println("Bye. Hope to see you again soon!");
+        System.out.println("Goodbye. Sad to see you leave!\n Hope to see you again soon!");
         printSeparator();
     }
     /*Print message for invalid command*/
