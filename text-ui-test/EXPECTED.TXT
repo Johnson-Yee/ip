@@ -1,4 +1,4 @@
-___________________________________________________
+__________________________________________________________________________________
            ____          ____
  __(")__  |  _ \ _   _  |  _ \  ____
 (__   __) | | | | | | | | | | || ___\
@@ -7,56 +7,73 @@ ___________________________________________________
 
 Sup! I'm Dude!
 What can a brother do for you?
-___________________________________________________
-todo borrow book
-___________________________________________________
-Got it. I've added this task:
-  [T][✘] borrow book
-Now you have 1 task in the list
-___________________________________________________
-deadline return book /by Sunday
-___________________________________________________
+__________________________________________________________________________________
+__________________________________________________________________________________
 Got it. I've added this task:
   [D][✘] return book  (by:  Sunday)
-Now you have 2 tasks in the list
-___________________________________________________
-event project meeting /at Mon 2-4pm
-___________________________________________________
+Now you have 1 task in the list
+__________________________________________________________________________________
+__________________________________________________________________________________
 Got it. I've added this task:
   [E][✘] project meeting  (at:  Mon 2-4pm)
-Now you have 3 tasks in the list
-___________________________________________________
-help
-___________________________________________________
+Now you have 2 tasks in the list
+__________________________________________________________________________________
+__________________________________________________________________________________
 Here are the range of commands:
- 1.todo
- 2.deadline
- 3.event
- 4.list
- 5.done
- 6.bye
+1.todo
+ Command used to record impending tasks
+ For "todo", kindly input in this format: *todo* *description*
 
-___________________________________________________
-list
-___________________________________________________
-1.[T][✘] borrow book
-2.[D][✘] return book  (by:  Sunday)
-3.[E][✘] project meeting  (at:  Mon 2-4pm)
-___________________________________________________
-done 2
-___________________________________________________
+2.deadline
+ Command used to record tasks with deadlines
+ For "deadline", kindly input in this format: *deadline* *description* */by* *date of deadline*
+ eg. deadline read book /by Sunday
+
+3.event
+ Command used to record tasks with events with dates
+ For "event", kindly input in this format: *event* *description* */at* *date of event*
+ eg. event Haccers Hackathon /at 16/09/2020
+
+4.list
+ Command used to list out all tasks at hand
+ No additional info needed!
+
+5.done
+ Command used to mark task as done
+ For "done", kindly input task number behind
+ eg. done 2
+
+6.delete
+ Command used to delete specified task
+ eg. delete 2
+
+7.bye
+ Command used to exit program
+ No additional info needed!
+__________________________________________________________________________________
+__________________________________________________________________________________
+1.[D][✘] return book  (by:  Sunday)
+2.[E][✘] project meeting  (at:  Mon 2-4pm)
+__________________________________________________________________________________
+__________________________________________________________________________________
 Nice! I've marked this task as done:
-[✓] return book  (by:  Sunday)
-___________________________________________________
-list
-___________________________________________________
-1.[T][✘] borrow book
-2.[D][✓] return book  (by:  Sunday)
-3.[E][✘] project meeting  (at:  Mon 2-4pm)
-___________________________________________________
-bye
-___________________________________________________
-Bye. Hope to see you again soon!
-___________________________________________________
+[✓] project meeting  (at:  Mon 2-4pm)
+__________________________________________________________________________________
+__________________________________________________________________________________
+1.[D][✘] return book  (by:  Sunday)
+2.[E][✓] project meeting  (at:  Mon 2-4pm)
+__________________________________________________________________________________
+__________________________________________________________________________________
+Got it brother! I've removed this task:
+[E][✓] project meeting  (at:  Mon 2-4pm)
+ Now you have 1 task in the list.
+__________________________________________________________________________________
+__________________________________________________________________________________
+1.[D][✘] return book  (by:  Sunday)
+__________________________________________________________________________________
+__________________________________________________________________________________
+Goodbye. Sad to see you leave!
+ Hope to see you again soon!
+__________________________________________________________________________________
 
 Process finished with exit code 0
