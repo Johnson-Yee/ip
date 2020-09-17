@@ -3,31 +3,36 @@ import Tasks.Deadline;
 import Tasks.Event;
 import Tasks.Task;
 import Tasks.ToDo;
+
 import java.util.Scanner;
-import java.util.Arrays;
+import java.util.ArrayList;
 
 public class Duke {
     /*Command Prefixes*/
     private static final String COMMAND_LIST = "list";
+    private static final String COMMAND_HELP = "help";
+    private static final String COMMAND_BYE = "bye";
+    private static final String COMMAND_DONE = "done";
+    private static final String COMMAND_DEADLINE = "deadline";
+    private static final String COMMAND_TODO = "todo";
+    private static final String COMMAND_EVENT = "event";
+    private static final String COMMAND_DELETE = "delete";
 
     /*Delimiter Prefixes*/
     private static final String EVENT_QUALIFIER = "/at";
     private static final String DEADLINE_QUALIFIER = "/by";
 
-    /*Constants used*/
-    private static final int MAX_TASKS = 100;
-
-    //private static boolean hasExited = false;
+    /*External classes used*/
     private static final Scanner input = new Scanner(System.in);
+    private static ArrayList<Task> currentTasks = new ArrayList<>();
 
     public static void main(String[] args) throws DukeException {
         String userInput = "";
-        Task[] currentTasks = new Task[MAX_TASKS];
         int numOfTasks = 0;
         boolean isOngoing = true;
 
-        showWelcomeMessage();
-        executeCommands(currentTasks, numOfTasks, isOngoing);
+        printWelcomeMessage();
+        executeCommands(numOfTasks, isOngoing);
     }
 
 
@@ -41,38 +46,41 @@ public class Duke {
     /**
      * Execute commands as intended by user
      *
-     * @param currentTasks Tasks Array of all tasks
-     * @param numOfTasks   Number of tasks
-     * @param isOngoing    Whether the program has yet to be exited
+     * @param numOfTasks Number of tasks
+     * @param isOngoing  Whether the program has yet to be exited
      * @return numOfTasks Updated number of tasks
-     * @throws DukeException to catch error
+     * @throws DukeException to catch error specified under DukeException
      */
-    private static void executeCommands(Task[] currentTasks, int numOfTasks, boolean isOngoing) throws DukeException {
+    private static void executeCommands(int numOfTasks, boolean isOngoing) throws DukeException {
         String userInput;
         while (isOngoing) {
             userInput = getUserInput();
             String[] splitUserInput = splitCommands(userInput);
-            switch (splitUserInput[0].toLowerCase()) {
-            case "bye":
+            String userCommand = splitUserInput[0].toLowerCase();
+            switch (userCommand) {
+            case COMMAND_BYE:
                 printExitMessage();
                 isOngoing = false;
                 break;
-            case "list":
-                commandList(currentTasks, numOfTasks);
+            case COMMAND_LIST:
+                commandList(numOfTasks);
                 break;
-            case "done":
-                markAsDone(currentTasks, numOfTasks, splitUserInput[1]);
+            case COMMAND_DONE:
+                commandDone(numOfTasks, splitUserInput[1]);
                 break;
-            case "deadline":
-                numOfTasks = commandDeadline(currentTasks, numOfTasks, splitUserInput[1]);
+            case COMMAND_DEADLINE:
+                numOfTasks = commandDeadline(numOfTasks, splitUserInput[1]);
                 break;
-            case "todo":
-                numOfTasks = commandToDo(currentTasks, numOfTasks, splitUserInput[1]);
+            case COMMAND_TODO:
+                numOfTasks = commandToDo(numOfTasks, splitUserInput[1]);
                 break;
-            case "event":
-                numOfTasks = commandEvent(currentTasks, numOfTasks, splitUserInput[1]);
+            case COMMAND_EVENT:
+                numOfTasks = commandEvent(numOfTasks, splitUserInput[1]);
                 break;
-            case "help":
+            case COMMAND_DELETE:
+                numOfTasks = commandDelete(numOfTasks, splitUserInput[1]);
+                break;
+            case COMMAND_HELP:
                 commandHelp();
                 break;
             default:
@@ -90,29 +98,35 @@ public class Duke {
     /**
      * Prints all tasks in task list
      *
-     * @param currentTasks Tasks Array of all tasks
+     * @param numOfTasks
      */
-    private static void commandList(Task[] currentTasks, int numOfTasks) {
-        printSeparator();
-        if (numOfTasks == 0) {
-            System.out.println("You have zero task at hand!");
+    private static void commandList(int numOfTasks) throws DukeException {
+        try {
+            printSeparator();
+            if (numOfTasks == 0) {
+                System.out.println("You have zero task at hand!");
+            }
+            for (int i = 0; i < numOfTasks; i++) {
+                System.out.println((i + 1) + "." + addBrackets(currentTasks.get(i).getType()) +
+                        addBrackets(currentTasks.get(i).getStatusIcon()) + " " + currentTasks.get(i).getDescription());
+            }
+            printSeparator();
+        } catch (ArrayIndexOutOfBoundsException error) {
+            printSeparator();
+            System.out.println("Array index out of bounds detected!\n");
+            printSeparator();
         }
-        for (int i = 0; i < numOfTasks; i++) {
-            System.out.println((i + 1) + "." + addBrackets(currentTasks[i].getType()) +
-                    addBrackets(currentTasks[i].getStatusIcon()) + " " + currentTasks[i].getDescription());
-        }
-        printSeparator();
     }
 
     /**
-     * Adds a Tasks.Deadline task to the currentTasks Tasks.Task array
+     * Adds a Deadline task to the currentTasks Task array
      *
-     * @param currentTasks Tasks Array of all tasks
-     * @param numOfTasks   Number of tasks
-     * @param userInput    User input
+     * @param numOfTasks Number of tasks
+     * @param userInput  User input
      * @return numOfTasks Updated number of tasks
+     * @throws DukeException to catch error specified under DukeException
      */
-    private static int commandDeadline(Task[] currentTasks, int numOfTasks, String userInput) {
+    private static int commandDeadline(int numOfTasks, String userInput) throws DukeException {
         try {
             /*If user input contains only one word*/
             if (userInput.length() < 1) {
@@ -131,12 +145,10 @@ public class Duke {
             if (splitInfoAndDeadline[1].isEmpty()) {
                 throw new DukeException("MISSING_INFO");
             }
-            currentTasks[numOfTasks] = new Deadline(splitInfoAndDeadline[0], splitInfoAndDeadline[1]);
+            Deadline newDeadline = new Deadline(splitInfoAndDeadline[0], splitInfoAndDeadline[1]);
+            currentTasks.add(newDeadline);
             printSeparator();
-            System.out.println("Got it. I've added this task: \n" + "  " + addBrackets(currentTasks[numOfTasks].getType())
-                    + addBrackets(currentTasks[numOfTasks].getStatusIcon()) + " " + splitInfoAndDeadline[0] + " (by: " +
-                    splitInfoAndDeadline[1] + ")\n" + "Now you have " + (numOfTasks + 1) + (numOfTasks == 0 ? " task" :
-                    " tasks") + " in the list");
+            printTaskConfirmation(numOfTasks, splitInfoAndDeadline);
             printSeparator();
             numOfTasks++;
 
@@ -149,23 +161,22 @@ public class Duke {
     }
 
     /**
-     * Adds a Tasks.ToDo task to the currentTasks Tasks.Task array
+     * Adds a ToDo task to the currentTasks Task array
      *
-     * @param currentTasks   Tasks Array of all tasks
      * @param numOfTasks     Number of tasks
      * @param splitUserInput User input
      * @return numOfTasks Updated number of tasks
+     * @throws DukeException to catch error specified under DukeException
      */
-    private static int commandToDo(Task[] currentTasks, int numOfTasks, String splitUserInput) {
+    private static int commandToDo(int numOfTasks, String splitUserInput) throws DukeException {
         try {
             if (splitUserInput.isBlank()) {
                 throw new DukeException("MISSING_DESCRIPTION");
             }
-            currentTasks[numOfTasks] = new ToDo(splitUserInput);
+            ToDo newTodo = new ToDo(splitUserInput);
+            currentTasks.add(newTodo);
             printSeparator();
-            System.out.println("Got it. I've added this task: \n" + "  " + addBrackets(currentTasks[numOfTasks].getType())
-                    + addBrackets(currentTasks[numOfTasks].getStatusIcon()) + " " + splitUserInput + " \n" + "Now you have "
-                    + (numOfTasks + 1) + (numOfTasks == 0 ? " task" : " tasks") + " in the list");
+            printTaskConfirmation(numOfTasks, splitUserInput);
             numOfTasks++;
             printSeparator();
 
@@ -178,14 +189,14 @@ public class Duke {
     }
 
     /**
-     * Adds a Tasks.ToDo task to the currentTasks Tasks.Task array
+     * Adds a Event task to the currentTasks Task array
      *
-     * @param currentTasks Tasks Array of all tasks
-     * @param numOfTasks   Number of tasks
-     * @param userInput    User input
+     * @param numOfTasks Number of tasks
+     * @param userInput  User input
      * @return numOfTasks Updated number of tasks
+     * @throws DukeException to catch error specified under DukeException
      */
-    private static int commandEvent(Task[] currentTasks, int numOfTasks, String userInput) throws DukeException {
+    private static int commandEvent(int numOfTasks, String userInput) throws DukeException {
         try {
             /*If user input contains only one word*/
             if (userInput.length() < 1) {
@@ -195,39 +206,98 @@ public class Duke {
             if (!userInput.contains("/at")) {
                 throw new DukeException("MISSING_QUALIFIER");
             }
+            /*Split into 2 sections with index 0 being the Description and index 1 being event date*/
             String[] splitInfoAndDate = userInput.trim().split(EVENT_QUALIFIER, 2);
+            String eventDescription = splitInfoAndDate[0];
+            String eventDate = splitInfoAndDate[1];
+
             /*If user input has no description*/
-            if (splitInfoAndDate[0].isEmpty()) {
+            if (eventDescription.isEmpty()) {
                 throw new DukeException("MISSING_DESCRIPTION");
             }
             /*If user input has no event date*/
-            if (splitInfoAndDate[1].isEmpty()) {
+            if (eventDate.isEmpty()) {
                 throw new DukeException("MISSING_INFO");
             }
-            currentTasks[numOfTasks] = new Event(splitInfoAndDate[0], splitInfoAndDate[1]);
+            Event newEvent = new Event(eventDescription, eventDate);
+            currentTasks.add(newEvent);
             printSeparator();
-            System.out.println("Got it. I've added this task: \n" + "  " + addBrackets(currentTasks[numOfTasks].getType())
-                    + addBrackets(currentTasks[numOfTasks].getStatusIcon()) + " " + splitInfoAndDate[0] + " (at: " +
-                    splitInfoAndDate[1] + ")\n" + "Now you have " + (numOfTasks + 1) + (numOfTasks == 0 ? " task" : " tasks")
-                    + " in the list");
+            printTaskConfirmation(numOfTasks, splitInfoAndDate);
             numOfTasks++;
             printSeparator();
         } catch (DukeException error) {
             printSeparator();
-            //error.printStackTrace();
             System.out.println(error);
             printSeparator();
         }
         return numOfTasks;
     }
 
-    /*Prints out a list of available commands*/
-    private static void commandHelp() {
-        printSeparator();
-        System.out.println("Here are the range of commands:\n 1.todo\n 2.deadline\n 3.event\n 4.list\n 5.done\n 6.bye");
-        printSeparator();
+    /**
+     * Mark task as done
+     *
+     * @param numOfTasks total number of tasks
+     * @param number     task number
+     * @throws DukeException         to catch error specified under DukeException
+     * @throws NumberFormatException specified task number is not recognised eg not a number/ is empty
+     */
+    private static void commandDone(int numOfTasks, String number) throws DukeException {
+        try {
+            int taskNum = Integer.parseInt(number);
+            if (taskNum <= 0 || taskNum > numOfTasks) {
+                throw new DukeException("OUT_OF_RANGE");
+            }
+            if (number.isBlank()) {
+                throw new DukeException("MISSING_NUMBER");
+            }
+            updateAsDone(taskNum);
+        } catch (DukeException error) {
+            printSeparator();
+            System.out.println(error);
+            printSeparator();
+        } catch (NumberFormatException numberError) {
+            printSeparator();
+            System.out.println("Gosh you did not key in a valid number");
+            printSeparator();
+        }
     }
 
+    /**
+     * Removes a task
+     *
+     * @param numOfTasks total number of tasks
+     * @param number     task number
+     * @return numberOfTasks Returns updated number of taks
+     * @throws DukeException         to catch error specified under DukeException
+     * @throws NumberFormatException specified task number is not recognised eg not a number/ is empty
+     */
+    private static int commandDelete(int numOfTasks, String number) throws DukeException {
+        try {
+            int taskNum = Integer.parseInt(number);
+            if (taskNum <= 0 || taskNum > numOfTasks) {
+                throw new DukeException("OUT_OF_RANGE");
+            }
+            if (number.isBlank()) {
+                throw new DukeException("MISSING_NUMBER");
+            }
+            numOfTasks = removeFromArray(numOfTasks, taskNum);
+        } catch (DukeException error) {
+            printSeparator();
+            System.out.println(error);
+            printSeparator();
+        } catch (NumberFormatException numberError) {
+            printSeparator();
+            System.out.println("Gosh you did not key in a valid number");
+            printSeparator();
+        }
+        return numOfTasks;
+    }
+
+    private static void commandHelp() {
+        printSeparator();
+        printHelpMessage();
+        printSeparator();
+    }
 
     /*
      * ===========================================
@@ -235,8 +305,7 @@ public class Duke {
      * ===========================================
      */
 
-    /*Prints welcome message*/
-    private static void showWelcomeMessage() {
+    private static void printWelcomeMessage() {
         printSeparator();
         String logo = "           ____          ____       \n"
                 + " __(\")__  |  _ \\ _   _  |  _ \\  ____ \n"
@@ -279,14 +348,13 @@ public class Duke {
         printSeparator();
     }
 
-    /*Print message for invalid command*/
     private static void printInvalidCommand() {
         printSeparator();
         System.out.println("Sorry! You have entered an invalid command!\n For more help, type help");
         printSeparator();
     }
 
-    /*Trim user input*/
+    /*Trims user input*/
     private static String getUserInput() {
         String inputLine = input.nextLine();
         return inputLine.trim();
@@ -304,30 +372,89 @@ public class Duke {
     }
 
     /**
-     * Mark task as done
+     * Prints task confirmation message for deadline and event
      *
-     * @param currentTasks
-     * @param numOfTasks
-     * @param number
+     * @param numOfTasks       Current total number of tasks
+     * @param splitInfoAndDate String array containing description and date (Either deadline or event date)
      */
-    private static void markAsDone(Task[] currentTasks, int numOfTasks, String number)  {
-        int taskNum = Integer.parseInt(number);
-            if (taskNum <= 0 || taskNum > numOfTasks) {
-                printSeparator();
-                System.out.println("Number is not within range!");
-                printSeparator();
-                return;
-            }
-        if (number.isBlank()) {
-            printSeparator();
-            System.out.println("Please key in the number");
-            printSeparator();
-            return;
+    private static void printTaskConfirmation(int numOfTasks, String[] splitInfoAndDate) {
+        char type = currentTasks.get(numOfTasks).getType();
+        switch (type) {
+        /*Print confirmation for DEADLINE*/
+        case 'D':
+            System.out.println("Got it. I've added this task: \n" + "  " + addBrackets(currentTasks.get(numOfTasks).getType())
+                    + addBrackets(currentTasks.get(numOfTasks).getStatusIcon()) + " " + splitInfoAndDate[0] + " (by: " +
+                    splitInfoAndDate[1] + ")\n" + "Now you have " + (numOfTasks + 1) + (numOfTasks == 0 ? " task" : " tasks")
+                    + " in the list");
+            break;
+        /*Print confirmation for EVENT*/
+        case 'E':
+            System.out.println("Got it. I've added this task: \n" + "  " + addBrackets(currentTasks.get(numOfTasks).getType())
+                    + addBrackets(currentTasks.get(numOfTasks).getStatusIcon()) + " " + splitInfoAndDate[0] + " (at: " +
+                    splitInfoAndDate[1] + ")\n" + "Now you have " + (numOfTasks + 1) + (numOfTasks == 0 ? " task" : " tasks")
+                    + " in the list");
+            break;
         }
-            currentTasks[taskNum - 1].setAsDone();
-            printSeparator();
-            System.out.println("Nice! I've marked this task as done: \n" + "[" +
-                    currentTasks[taskNum - 1].getStatusIcon() + "] " + currentTasks[taskNum - 1].getDescription());
-            printSeparator();
+
+    }
+
+    /**
+     * Prints task confirmation message for todo (Overloaded function with different paramenters)
+     *
+     * @param numOfTasks  Current total number of tasks
+     * @param description Task Description
+     */
+    private static void printTaskConfirmation(int numOfTasks, String description) {
+        System.out.println("Got it. I've added this task: \n" + "  " + addBrackets(currentTasks.get(numOfTasks).getType())
+                + addBrackets(currentTasks.get(numOfTasks).getStatusIcon()) + " " + description + "\n" + "Now you have "
+                + (numOfTasks + 1) + (numOfTasks == 0 ? " task" : " tasks") + " in the list");
+    }
+    /**
+     * Update task as Done and print edited task message
+     *
+     * @param taskNum specific task number
+     */
+    private static void updateAsDone(int taskNum) {
+        currentTasks.get(taskNum - 1).setAsDone();
+        printSeparator();
+        System.out.println("Nice! I've marked this task as done: \n" + "[" +
+                currentTasks.get(taskNum - 1).getStatusIcon() + "] " + currentTasks.get(taskNum - 1).getDescription());
+        printSeparator();
+    }
+    /**
+     * Update task as Done and print edited task message
+     *
+     * @param taskNum specific task number
+     * @return numOfTasks Updated number of tasks after remove that specific entry
+     */
+    private static int removeFromArray(int numOfTasks, int taskNum) {
+        printSeparator();
+        System.out.println("Got it brother! I've removed this task: \n" + addBrackets(currentTasks.get(taskNum - 1).getType())
+                + addBrackets(currentTasks.get(taskNum - 1).getStatusIcon()) +" "+ currentTasks.get(taskNum - 1).getDescription() +
+                "\n Now you have " + (numOfTasks -1) + ((numOfTasks -1) == 1 ? " task" : " tasks")+" in the list.");
+
+        currentTasks.remove(taskNum - 1);
+        numOfTasks--;
+        printSeparator();
+        return numOfTasks;
+    }
+
+    private static void printHelpMessage() {
+        System.out.println("Here are the range of commands:\n" +
+                "1.todo\n Command used to record impending tasks\n" +
+                " For \"todo\", kindly input in this format: *todo* *description*\n\n" +
+                "2.deadline\n Command used to record tasks with deadlines\n" +
+                " For \"deadline\", kindly input in this format: *deadline* " +
+                "*description* */by* *date of deadline*\n" + " eg. deadline read book /by Sunday \n\n" +
+                "3.event\n Command used to record tasks with events with dates\n" +
+                " For \"event\", kindly input in this format: *event* " +
+                "*description* */at* *date of event*\n" + " eg. event Haccers Hackathon /at 16/09/2020 \n\n" +
+                "4.list\n Command used to list out all tasks at hand \n No additional info needed!\n\n" +
+                "5.done\n Command used to mark task as done\n" +
+                " For \"done\", kindly input task number behind\n" +
+                " eg. done 2\n\n" +
+                "6.delete\n Command used to delete specified task\n"+
+                " eg. delete 2\n\n"+
+                "7.bye\n Command used to exit program\n No additional info needed!");
     }
 }
