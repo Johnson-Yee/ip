@@ -4,6 +4,7 @@ import Tasks.Event;
 import Tasks.Task;
 import Tasks.ToDo;
 
+import java.io.IOException;
 import java.util.Scanner;
 import java.util.ArrayList;
 
@@ -26,11 +27,10 @@ public class Duke {
     private static final Scanner input = new Scanner(System.in);
     private static ArrayList<Task> currentTasks = new ArrayList<>();
 
-    public static void main(String[] args) throws DukeException {
-        String userInput = "";
+    public static void main(String[] args) throws DukeException, IOException {
         int numOfTasks = 0;
         boolean isOngoing = true;
-
+        numOfTasks = loadTaskfromTXT();
         printWelcomeMessage();
         executeCommands(numOfTasks, isOngoing);
     }
@@ -48,10 +48,9 @@ public class Duke {
      *
      * @param numOfTasks Number of tasks
      * @param isOngoing  Whether the program has yet to be exited
-     * @return numOfTasks Updated number of tasks
      * @throws DukeException to catch error specified under DukeException
      */
-    private static void executeCommands(int numOfTasks, boolean isOngoing) throws DukeException {
+    private static void executeCommands(int numOfTasks, boolean isOngoing) throws DukeException, IOException {
         String userInput;
         while (isOngoing) {
             userInput = getUserInput();
@@ -59,6 +58,7 @@ public class Duke {
             String userCommand = splitUserInput[0].toLowerCase();
             switch (userCommand) {
             case COMMAND_BYE:
+                FileManager.saveFile(currentTasks);
                 printExitMessage();
                 isOngoing = false;
                 break;
@@ -98,9 +98,9 @@ public class Duke {
     /**
      * Prints all tasks in task list
      *
-     * @param numOfTasks
+     * @param numOfTasks Total number of tasks
      */
-    private static void commandList(int numOfTasks) throws DukeException {
+    private static void commandList(int numOfTasks) {
         try {
             printSeparator();
             if (numOfTasks == 0) {
@@ -126,7 +126,7 @@ public class Duke {
      * @return numOfTasks Updated number of tasks
      * @throws DukeException to catch error specified under DukeException
      */
-    private static int commandDeadline(int numOfTasks, String userInput) throws DukeException {
+    private static int commandDeadline(int numOfTasks, String userInput) throws DukeException{
         try {
             /*If user input contains only one word*/
             if (userInput.length() < 1) {
@@ -267,7 +267,7 @@ public class Duke {
      *
      * @param numOfTasks total number of tasks
      * @param number     task number
-     * @return numberOfTasks Returns updated number of taks
+     * @return numberOfTasks Returns updated number of task
      * @throws DukeException         to catch error specified under DukeException
      * @throws NumberFormatException specified task number is not recognised eg not a number/ is empty
      */
@@ -348,19 +348,25 @@ public class Duke {
         printSeparator();
     }
 
-    private static void printInvalidCommand() {
-        printSeparator();
-        System.out.println("Sorry! You have entered an invalid command!\n For more help, type help");
-        printSeparator();
-    }
 
     /*Trims user input*/
     private static String getUserInput() {
         String inputLine = input.nextLine();
         return inputLine.trim();
     }
+    /**
+     * Load file from txt storage file using FileManager class method
+     * @throws IOException If file can't be loaded
+     * @return taskList Array list of tasks containing all stored tasks
+     */
+    private static int loadTaskfromTXT() throws IOException, DukeException {
+        int numOfTasks;
+        currentTasks = FileManager.loadFile();
+        numOfTasks = currentTasks.size();
+        return numOfTasks;
+    }
 
-    private static void printSeparator() {
+    public static void printSeparator() {
         String line = "__________________________________________________________________________________";
         System.out.println(line);
     }
@@ -399,7 +405,7 @@ public class Duke {
     }
 
     /**
-     * Prints task confirmation message for todo (Overloaded function with different paramenters)
+     * Prints task confirmation message for todo (Overloaded function with different parameters)
      *
      * @param numOfTasks  Current total number of tasks
      * @param description Task Description
@@ -448,7 +454,7 @@ public class Duke {
                 "*description* */by* *date of deadline*\n" + " eg. deadline read book /by Sunday \n\n" +
                 "3.event\n Command used to record tasks with events with dates\n" +
                 " For \"event\", kindly input in this format: *event* " +
-                "*description* */at* *date of event*\n" + " eg. event Haccers Hackathon /at 16/09/2020 \n\n" +
+                "*description* */at* *date of event*\n" + " eg. event Google Hackathon /at 16/09/2020 \n\n" +
                 "4.list\n Command used to list out all tasks at hand \n No additional info needed!\n\n" +
                 "5.done\n Command used to mark task as done\n" +
                 " For \"done\", kindly input task number behind\n" +

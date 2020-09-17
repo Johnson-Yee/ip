@@ -19,11 +19,19 @@ public class Task {
         return(description);
     }
 
+    public String getRawDescription(){
+        return(description);
+    }
+
     public void setAsDone(){
         isDone = true;
     }
 
     public char getType(){
         return type;
+    }
+
+    public boolean getIsDone(){
+        return isDone;
     }
 }
