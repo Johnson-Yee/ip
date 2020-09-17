@@ -11,12 +11,10 @@ import java.util.ArrayList;
 import java.util.Scanner;
 
 public class FileManager {
-    private static File savedFile;
     static final String SAVE_PATH = "data/fileStorage.txt";
     public static ArrayList<Task> tasksList = new ArrayList<>();
 
     public FileManager(File userFile){
-        this.savedFile = userFile;
     }
     /**
      * Saves all tasks into a text file in a specified format

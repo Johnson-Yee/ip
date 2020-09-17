@@ -28,9 +28,8 @@ public class Duke {
     private static ArrayList<Task> currentTasks = new ArrayList<>();
 
     public static void main(String[] args) throws DukeException, IOException {
-        int numOfTasks = 0;
         boolean isOngoing = true;
-        numOfTasks = loadTaskfromTXT();
+        int numOfTasks = loadTaskFromTXT();
         printWelcomeMessage();
         executeCommands(numOfTasks, isOngoing);
     }
@@ -359,7 +358,7 @@ public class Duke {
      * @throws IOException If file can't be loaded
      * @return taskList Array list of tasks containing all stored tasks
      */
-    private static int loadTaskfromTXT() throws IOException, DukeException {
+    private static int loadTaskFromTXT() throws IOException, DukeException {
         int numOfTasks;
         currentTasks = FileManager.loadFile();
         numOfTasks = currentTasks.size();
@@ -437,7 +436,7 @@ public class Duke {
         printSeparator();
         System.out.println("Got it brother! I've removed this task: \n" + addBrackets(currentTasks.get(taskNum - 1).getType())
                 + addBrackets(currentTasks.get(taskNum - 1).getStatusIcon()) +" "+ currentTasks.get(taskNum - 1).getDescription() +
-                "\n Now you have " + (numOfTasks -1) + ((numOfTasks -1) == 1 ? " task" : " tasks")+" in the list.");
+                "\n Now you have " + (numOfTasks -1) + ((numOfTasks -1) < 2 ? " task" : " tasks")+" in the list.");
 
         currentTasks.remove(taskNum - 1);
         numOfTasks--;
