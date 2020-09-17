@@ -7,6 +7,9 @@ public class DukeException extends Exception {
     public static final String MISSING_INFO = "You forgot the event date/deadline";
     public static final String MISSING_NUMBER = "You did not key in the task number that you want to mark";
     public static final String OUT_OF_RANGE = "The number you have keyed is out of the range!";
+    public static final String CREATE_FILE_FAIL = "Failed to create file! Can't help you on this brother!";
+    public static final String WRITE_FILE_FAIL = "Sorry to inform you! Failed to write file!";
+    public static final String FETCH_FILE_FAIL = "Sorry to inform you! Failed to fetch file!";
 
     public String errorMessage;
 
@@ -29,6 +32,15 @@ public class DukeException extends Exception {
             break;
         case "OUT_OF_RANGE":
             this.errorMessage = OUT_OF_RANGE;
+            break;
+        case "CREATE_FILE_FAIL":
+            this.errorMessage = CREATE_FILE_FAIL;
+            break;
+        case "WRITE_FILE_FAIL":
+            this.errorMessage = WRITE_FILE_FAIL;
+            break;
+        case "FETCH_FILE_FAIL":
+            this.errorMessage = FETCH_FILE_FAIL;
             break;
         }
 

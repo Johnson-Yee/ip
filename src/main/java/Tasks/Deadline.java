@@ -14,7 +14,11 @@ public class Deadline extends Task {
     public String getDescription(){
         return (super.getDescription() + " (by: " + by +")");
     }
+
+
     public char getType(){
         return type;
     }
+
+    public String getBy(){ return by;}
 }
