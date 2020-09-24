@@ -3,7 +3,7 @@ package Exceptions;
 public class DukeException extends Exception {
     public static final String MISSING_DESCRIPTION = "Hey! The description cannot be empty";
     public static final String UNINTELLIGIBLE_COMMAND = "Sorry! You have entered an invalid command!\n For more help, type \"help\"";
-    public static final String MISSING_QUALIFIER = "Hey!You are missing /by or /on in your input";
+    public static final String MISSING_QUALIFIER = "Hey!You are missing /by or /at in your input";
     public static final String MISSING_INFO = "You forgot the event date/deadline";
     public static final String MISSING_NUMBER = "You did not key in the task number that you want to mark";
     public static final String OUT_OF_RANGE = "The number you have keyed is out of the range!";
