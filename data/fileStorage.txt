@@ -1,3 +1,0 @@
-T | 0 | sayHello to Google
-E | 1 | Google Day | 2nd October
-D | 0 | submit book | 3rd October
