@@ -1,6 +1,6 @@
 package Tasks;
 
-public class Event extends Task{
+public class Event extends Task {
 
     protected String on;
 
@@ -11,15 +11,15 @@ public class Event extends Task{
     }
 
     @Override
-    public String getDescription(){
-        return (super.getDescription() + " (on: " + on +")");
+    public String getDescription() {
+        return (super.getDescription() + " (on: " + on + ")");
     }
 
-    public char getType(){
+    public char getType() {
         return type;
     }
 
-    public String getOn(){
+    public String getOn() {
         return on;
     }
 }

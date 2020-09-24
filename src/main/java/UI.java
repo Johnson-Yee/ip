@@ -6,23 +6,25 @@ public class UI {
 
 
     public static void printMatchesFound(ArrayList<Task> matchesFound) {
-        if(matchesFound.size() == 0){
+        if (matchesFound.size() == 0) {
             printSeparator();
             System.out.println("No matches found! Better luck next time!");
-        }else{
+        } else {
             System.out.println("Here are the matches found!");
-            for(int i = 0; i < matchesFound.size(); i++){
-                System.out.println(" " + (i+1) + ". " +matchesFound.get(i).getDescription());
+            for (int i = 0; i < matchesFound.size(); i++) {
+                System.out.println(" " + (i + 1) + ". " + matchesFound.get(i).getDescription());
             }
         }
         printSeparator();
     }
+
     public static void printDeleteTaskMessage(int numOfTasks, int taskNum) {
         printSeparator();
         System.out.println("Got it brother! I've removed this task: \n" + addBrackets(TaskList.currentTasks.get(taskNum - 1).getType())
                 + addBrackets(TaskList.currentTasks.get(taskNum - 1).getStatusIcon()) + " " + TaskList.currentTasks.get(taskNum - 1).getDescription() +
                 "\n Now you have " + (numOfTasks - 1) + ((numOfTasks - 1) < 2 ? " task" : " tasks") + " in the list.");
     }
+
     /**
      * Prints task confirmation message for todo (Overloaded function with different parameters)
      *
@@ -59,7 +61,6 @@ public class UI {
                     + " in the list");
             break;
         }
-
     }
 
     public static void printHelpMessage() {
@@ -78,9 +79,9 @@ public class UI {
                 " eg. done 2\n\n" +
                 "6.delete\n Command used to delete specified task\n" +
                 " eg. delete 2\n\n" +
-                "8.find\n Command used to search for tasks that contains certain keywords\n" +
-                        " eg. find book"+
-                "7.bye\n Command used to exit program\n No additional info needed!");
+                "7.find\n Command used to search for tasks that contains certain keywords\n" +
+                " eg. find book\n\n" +
+                "8.bye\n Command used to exit program\n No additional info needed!");
     }
 
     public static void printWelcomeMessage() {

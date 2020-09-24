@@ -20,6 +20,7 @@ public class Parser {
 
     /*External classes used*/
     private static final Scanner input = new Scanner(System.in);
+
     /**
      * Execute commands as intended by user
      *
@@ -77,11 +78,13 @@ public class Parser {
             }
         }
     }
+
     /*Function to get command from sentence and split sentence into 2*/
     private static String[] splitCommands(String userInput) {
         final String[] split = userInput.trim().split("\\s+", 2);
         return split.length == 2 ? split : new String[]{split[0], " "};
     }
+
     private static String getTrimmedUserInput() {
         String inputLine = input.nextLine();
         return inputLine.trim();

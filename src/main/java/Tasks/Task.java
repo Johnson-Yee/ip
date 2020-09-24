@@ -15,23 +15,23 @@ public class Task {
         return (isDone ? "\u2713" : "\u2718"); //return tick or X symbols
     }
 
-    public String getDescription(){
-        return(description);
+    public String getDescription() {
+        return (description);
     }
 
-    public String getRawDescription(){
-        return(description);
+    public String getRawDescription() {
+        return (description);
     }
 
-    public void setAsDone(){
+    public void setAsDone() {
         isDone = true;
     }
 
-    public char getType(){
+    public char getType() {
         return type;
     }
 
-    public boolean getIsDone(){
+    public boolean getIsDone() {
         return isDone;
     }
 }

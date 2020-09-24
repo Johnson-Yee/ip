@@ -1,5 +1,6 @@
 import Exceptions.DukeException;
 import FileStorage.FileManager;
+
 import java.io.IOException;
 import java.time.LocalDate;
 
@@ -11,7 +12,7 @@ public class Duke {
     private static UI userInterface;
     private static FileManager fileManager;
 
-    public Duke(){
+    public Duke() {
         userInterface = new UI();
         fileManager = new FileManager(FILE_NAME, FILE_DIR);
         try {

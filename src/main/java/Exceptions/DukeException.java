@@ -12,13 +12,13 @@ public class DukeException extends Exception {
     public static final String FETCH_FILE_FAIL = "Sorry to inform you! Failed to fetch file!";
     public static final String SET_DATE_FAIL = "You have tried to set a date that is before today. Dude.java is not" +
             " advanced enough to help you time-travel";
-    public static final String INVALID_DATE = "Sorry, the date you have provided is not accepted. Kindly follow" +
+    public static final String INVALID_DATE = "Sorry, the date you have provided is not accepted. Kindly follow " +
             "this format: DD/MM/YYYY or DD/MM/YYYY HH:mm eg 28/10/2020 18:00";
 
     public String errorMessage;
 
     public DukeException(String error) {
-        switch(error) {
+        switch (error) {
         case "MISSING_DESCRIPTION":
             this.errorMessage = MISSING_DESCRIPTION;
             break;
@@ -55,7 +55,7 @@ public class DukeException extends Exception {
         }
     }
 
-    public String getMessage(){
+    public String getMessage() {
         return errorMessage;
     }
 }
