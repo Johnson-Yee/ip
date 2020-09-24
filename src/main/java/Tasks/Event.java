@@ -2,24 +2,24 @@ package Tasks;
 
 public class Event extends Task{
 
-    protected String at;
+    protected String on;
 
-    public Event(String description, String at) {
+    public Event(String description, String on) {
         super(description);
         this.type = 'E';
-        this.at = at;
+        this.on = on;
     }
 
     @Override
     public String getDescription(){
-        return (super.getDescription() + " (at: " + at +")");
+        return (super.getDescription() + " (on: " + on +")");
     }
 
     public char getType(){
         return type;
     }
 
-    public String getAt(){
-        return at;
+    public String getOn(){
+        return on;
     }
 }

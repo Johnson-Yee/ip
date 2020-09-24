@@ -65,7 +65,7 @@ public class FileManager {
                 String textFormat = currTask.getType() + " | " +
                         (currTask.getIsDone()?"1":"0") +" | " + currTask.getRawDescription();
                 if(currTask instanceof Event){
-                    textFormat = textFormat + " |" + ((Event)currTask).getAt();
+                    textFormat = textFormat + " |" + ((Event)currTask).getOn();
                 }else if(currTask instanceof Deadline){
                     textFormat = textFormat + " |" + ((Deadline)currTask).getBy();
                 }
@@ -129,9 +129,9 @@ public class FileManager {
                 break;
             case "E":
                 String eventDescription = splitString[2].trim();
-                String at = splitString[3].trim();
+                String on = splitString[3].trim();
                 boolean hasCompletedEvent = (splitString[1].trim().equals("1"));
-                Event newEvent = new Event(eventDescription,at);
+                Event newEvent = new Event(eventDescription,on);
                 if(hasCompletedEvent){
                     newEvent.setAsDone();
                 }

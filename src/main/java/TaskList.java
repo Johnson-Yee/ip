@@ -4,12 +4,17 @@ import Tasks.Event;
 import Tasks.Task;
 import Tasks.ToDo;
 
+import java.time.DateTimeException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 
 public class TaskList {
 
     /*Delimiter Prefixes*/
-    private static final String EVENT_QUALIFIER = "/at";
+    private static final String EVENT_QUALIFIER = "/on";
     private static final String DEADLINE_QUALIFIER = "/by";
 
     public static ArrayList<Task> currentTasks = new ArrayList<>();
@@ -32,10 +37,12 @@ public class TaskList {
                 throw new DukeException("MISSING_DESCRIPTION");
             }
             /*Missing qualifier*/
-            if (!userInput.contains("/by")) {
+            if (!userInput.contains(DEADLINE_QUALIFIER)) {
                 throw new DukeException("MISSING_QUALIFIER");
             }
             String[] splitInfoAndDeadline = userInput.trim().split(DEADLINE_QUALIFIER, 2);
+            String deadlineDescription = splitInfoAndDeadline[0];
+            String deadlineDate = formatDate(splitInfoAndDeadline[1].trim());
             /*If user input has no description*/
             if (splitInfoAndDeadline[0].isEmpty()) {
                 throw new DukeException("MISSING_DESCRIPTION");
@@ -47,7 +54,7 @@ public class TaskList {
             Deadline newDeadline = new Deadline(splitInfoAndDeadline[0], splitInfoAndDeadline[1]);
             currentTasks.add(newDeadline);
             UI.printSeparator();
-            UI.printTaskConfirmation(numOfTasks, splitInfoAndDeadline);
+            UI.printTaskConfirmation(numOfTasks, splitInfoAndDeadline,deadlineDate);
             UI.printSeparator();
             numOfTasks++;
 
@@ -125,13 +132,13 @@ public class TaskList {
                 throw new DukeException("MISSING_DESCRIPTION");
             }
             /*Missing qualifier*/
-            if (!userInput.contains("/at")) {
+            if (!userInput.contains(EVENT_QUALIFIER)) {
                 throw new DukeException("MISSING_QUALIFIER");
             }
             /*Split into 2 sections with index 0 being the Description and index 1 being event date*/
             String[] splitInfoAndDate = userInput.trim().split(EVENT_QUALIFIER, 2);
             String eventDescription = splitInfoAndDate[0];
-            String eventDate = splitInfoAndDate[1];
+            String eventDate = formatDate(splitInfoAndDate[1].trim());
 
             /*If user input has no description*/
             if (eventDescription.isEmpty()) {
@@ -144,7 +151,7 @@ public class TaskList {
             Event newEvent = new Event(eventDescription, eventDate);
             currentTasks.add(newEvent);
             UI.printSeparator();
-            UI.printTaskConfirmation(numOfTasks, splitInfoAndDate);
+            UI.printTaskConfirmation(numOfTasks, splitInfoAndDate,eventDate);
             numOfTasks++;
             UI.printSeparator();
         } catch (DukeException error) {
@@ -256,9 +263,110 @@ public class TaskList {
                 currentTasks.get(taskNum - 1).getStatusIcon() + "] " + currentTasks.get(taskNum - 1).getDescription());
         UI.printSeparator();
     }
+    /**
+     * Reformats date accordingly
+     *
+     * @param rawDate user input for date of deadline/event
+     * @return finalEditedDate Returns reformatted date
+     * @throws DukeException   to catch error specified under DukeException
+     */
+    private static String formatDate(String rawDate) throws DukeException {
+        String finalEditedDate = new String();
+        try {
+            //Contains both date and time
+            if(rawDate.trim().length() > 12){
+                finalEditedDate = reformatDateAndTime(rawDate);
 
-    public int getSizeOfTaskList(){
-        int numOfTasks = currentTasks.size();
-        return numOfTasks;
+            }else{
+                finalEditedDate = reformatDate(rawDate);
+            }
+        } catch (DukeException e) {
+            UI.printSeparator();
+            e.getMessage();
+            UI.printSeparator();
+        } catch (DateTimeException | ArrayIndexOutOfBoundsException | NumberFormatException e){
+            throw new DukeException("INVALID_DATE");
+        }
+        return finalEditedDate;
+    }
+    /**
+     * Reformats date from DD-MM-YYYY to MMM DD YYYY
+     *
+     * @param rawDate user input for date of deadline/event
+     * @return finalEditedDate Returns reformatted date eg OCT 12 2020
+     * @throws DukeException         to catch error specified under DukeException
+     */
+    private static String reformatDate(String rawDate) throws DukeException {
+        String intermediateDate;
+        String finalEditedDate;
+        LocalDate date;
+        LocalDate todayDate = LocalDate.now();
+        intermediateDate = processDate(rawDate.trim());
+        String[] dateComponents = intermediateDate.split("-");
+        int year = Integer.parseInt(dateComponents[2]);
+        int month = Integer.parseInt(dateComponents[1]);
+        int day = Integer.parseInt(dateComponents[0]);
+        date = LocalDate.of(year,month,day);
+        if(date.isBefore(todayDate)){
+            throw new DukeException("SET_DATE_FAIL");
+        }
+        finalEditedDate = date.format(DateTimeFormatter.ofPattern("MMM dd yyyy"));
+        return finalEditedDate;
+    }
+    /**
+     * Reformats date and time from DD-MM-YYYY HH:mm to MMM DD YYYY HH:mm
+     *
+     * @param rawDateAndTime user input for date of deadline/event
+     * @return finalEditedDate Returns reformatted date eg OCT 12 2020 18:00
+     * @throws DukeException         to catch error specified under DukeException
+     */
+    private static String reformatDateAndTime(String rawDateAndTime) throws DukeException {
+        String intermediateDate;
+        String intermediateTime;
+        String finalEditedDate;
+        LocalDateTime dateTime;
+        LocalDateTime todayDateTime = LocalDateTime.now();
+
+        String[] splitDateAndTime = rawDateAndTime.trim().split(" ", 2);
+        intermediateDate = processDate(splitDateAndTime[0].trim());
+        String[] dateComponents = intermediateDate.split("-");
+        int year = Integer.parseInt(dateComponents[2]);
+        int month = Integer.parseInt(dateComponents[1]);
+        int day = Integer.parseInt(dateComponents[0]);
+
+        intermediateTime = processTime(splitDateAndTime[1].trim());
+        String[] timeComponents =intermediateTime.split(":");
+        int hour = Integer.parseInt(timeComponents[0]);
+        int min = Integer.parseInt(timeComponents[1]);
+
+        dateTime = LocalDateTime.of(year,month,day,hour,min);
+        if(dateTime.isBefore(todayDateTime)){
+            throw new DukeException("SET_DATE_FAIL");
+        }
+        finalEditedDate = dateTime.format(DateTimeFormatter.ofPattern("MMM dd yyyy HH:mm"));
+        return finalEditedDate;
+    }
+    /*Replace all occurrences of / or . in date given by user.*/
+    private static String processDate(String originalDate){
+        String processedDate =  originalDate.replace('/','-').replace('.','-');
+        return processedDate;
+    }
+    /*Replace all occurrences of . in time given by user. Additionally, add a ':' when users do not include it*/
+    private static String processTime(String originalTime){
+        String processedTime;
+        if(!originalTime.contains(":")){
+            processedTime = addCharAtIndex(originalTime,':',2);
+        }else{
+            processedTime = originalTime.replace('.',':');
+        }
+        return processedTime;
+    }
+
+    public static String addCharAtIndex(String str, char ch, int position){
+        return str.substring(0,position) +ch + str.substring(position);
+    }
+
+    public int getSizeOfTaskList() {
+        return currentTasks.size();
     }
 }
