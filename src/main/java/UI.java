@@ -25,21 +25,21 @@ public class UI {
      * @param numOfTasks       Current total number of tasks
      * @param splitInfoAndDate String array containing description and date (Either deadline or event date)
      */
-    public static void printTaskConfirmation(int numOfTasks, String[] splitInfoAndDate) {
+    public static void printTaskConfirmation(int numOfTasks, String[] splitInfoAndDate, String reformattedDate) {
         char type = TaskList.currentTasks.get(numOfTasks).getType();
         switch (type) {
         /*Print confirmation for DEADLINE*/
         case 'D':
             System.out.println("Got it. I've added this task: \n" + "  " + addBrackets(TaskList.currentTasks.get(numOfTasks).getType())
                     + addBrackets(TaskList.currentTasks.get(numOfTasks).getStatusIcon()) + " " + splitInfoAndDate[0] + " (by: " +
-                    splitInfoAndDate[1] + ")\n" + "Now you have " + (numOfTasks + 1) + (numOfTasks == 0 ? " task" : " tasks")
+                    reformattedDate + ")\n" + "Now you have " + (numOfTasks + 1) + (numOfTasks == 0 ? " task" : " tasks")
                     + " in the list");
             break;
         /*Print confirmation for EVENT*/
         case 'E':
             System.out.println("Got it. I've added this task: \n" + "  " + addBrackets(TaskList.currentTasks.get(numOfTasks).getType())
-                    + addBrackets(TaskList.currentTasks.get(numOfTasks).getStatusIcon()) + " " + splitInfoAndDate[0] + " (at: " +
-                    splitInfoAndDate[1] + ")\n" + "Now you have " + (numOfTasks + 1) + (numOfTasks == 0 ? " task" : " tasks")
+                    + addBrackets(TaskList.currentTasks.get(numOfTasks).getStatusIcon()) + " " + splitInfoAndDate[0] + " (on: " +
+                    reformattedDate + ")\n" + "Now you have " + (numOfTasks + 1) + (numOfTasks == 0 ? " task" : " tasks")
                     + " in the list");
             break;
         }
@@ -55,7 +55,7 @@ public class UI {
                 "*description* */by* *date of deadline*\n" + " eg. deadline read book /by Sunday \n\n" +
                 "3.event\n Command used to record tasks with events with dates\n" +
                 " For \"event\", kindly input in this format: *event* " +
-                "*description* */at* *date of event*\n" + " eg. event Google Hackathon /at 16/09/2020 \n\n" +
+                "*description* */on* *date of event*\n" + " eg. event Google Hackathon /on 16/09/2020 \n\n" +
                 "4.list\n Command used to list out all tasks at hand \n No additional info needed!\n\n" +
                 "5.done\n Command used to mark task as done\n" +
                 " For \"done\", kindly input task number behind\n" +
