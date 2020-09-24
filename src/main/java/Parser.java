@@ -1,7 +1,9 @@
 import Exceptions.DukeException;
 import FileStorage.FileManager;
+import Tasks.Task;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Parser {
@@ -14,6 +16,7 @@ public class Parser {
     private static final String COMMAND_TODO = "todo";
     private static final String COMMAND_EVENT = "event";
     private static final String COMMAND_DELETE = "delete";
+    private static final String COMMAND_FIND = "find";
 
     /*External classes used*/
     private static final Scanner input = new Scanner(System.in);
@@ -55,6 +58,10 @@ public class Parser {
                 break;
             case COMMAND_DELETE:
                 numOfTasks = TaskList.commandDelete(numOfTasks, splitUserInput[1]);
+                break;
+            case COMMAND_FIND:
+                ArrayList<Task> matchesFound = TaskList.commandFind(splitUserInput[1].toLowerCase());
+                UI.printMatchesFound(matchesFound);
                 break;
             case COMMAND_HELP:
                 TaskList.commandHelp();

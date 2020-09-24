@@ -182,6 +182,16 @@ public class TaskList {
             UI.printSeparator();
         }
     }
+    public static ArrayList<Task> commandFind(String stringToSearch){
+        ArrayList<Task> resultArray = new ArrayList<>();
+        for(int i=0; i<currentTasks.size(); i++){
+            boolean isFound = currentTasks.get(i).getDescription().toLowerCase().contains(stringToSearch);
+            if(isFound){
+                resultArray.add(currentTasks.get(i));
+            }
+        }
+        return resultArray;
+    }
 
     /**
      * Removes a task
