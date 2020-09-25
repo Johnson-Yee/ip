@@ -177,11 +177,11 @@ Follow this 3-step rectification: <br>
 Action | Format | example
 --- | --- | ---
 todo | `todo` **task description** | `todo` **CS2113T Pre-lecture Quiz**
-deadline | `deadline` **task description /by dd/mm/yyyy [HH:mm]** | `deadline` Complete CS quiz /by 20-10-2020
-event | `event` **task description /on dd/mm/yyyy [HH:mm]** | `event` Google Hackathon /on 26/10/2020 18:00
+deadline | `deadline` **task description /by dd/mm/yyyy [HH:mm]** | `deadline` **Complete CS quiz /by 20-10-2020**
+event | `event` **task description /on dd/mm/yyyy [HH:mm]** | `event` **Google Hackathon /on 26/10/2020 18:00**
 list | `list` | `list`
-done | `done` **task index** | `done` 1
-delete | `delete` **task index** | `delete` 2
-find | `find` **keyword** | `find` cs2113t
+done | `done` **task index** | `done` **1**
+delete | `delete` **task index** | `delete` **2**
+find | `find` **keyword** | `find` **cs2113t**
 bye | `bye` | `bye`
 help | `help` | `help`
