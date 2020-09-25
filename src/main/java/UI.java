@@ -10,7 +10,8 @@ public class UI {
             printSeparator();
             System.out.println("No matches found! Better luck next time!");
         } else {
-            System.out.println("Here are the matches found!");
+            printSeparator();
+            System.out.println("Here are the match(es) found!");
             for (int i = 0; i < matchesFound.size(); i++) {
                 System.out.println(" " + (i + 1) + ". " + matchesFound.get(i).getDescription());
             }
@@ -69,10 +70,10 @@ public class UI {
                 " For \"todo\", kindly input in this format: *todo* *description*\n\n" +
                 "2.deadline\n Command used to record tasks with deadlines\n" +
                 " For \"deadline\", kindly input in this format: *deadline* " +
-                "*description* */by* *date of deadline*\n" + " eg. deadline read book /by Sunday \n\n" +
+                "*description* */by* *date of deadline*\n" + " eg. deadline read book /by 18/10/2020 1800 \n\n" +
                 "3.event\n Command used to record tasks with events with dates\n" +
                 " For \"event\", kindly input in this format: *event* " +
-                "*description* */on* *date of event*\n" + " eg. event Google Hackathon /on 16/09/2020 \n\n" +
+                "*description* */on* *date of event*\n" + " eg. event Google Hackathon /on 28/10/2020 1000 \n\n" +
                 "4.list\n Command used to list out all tasks at hand \n No additional info needed!\n\n" +
                 "5.done\n Command used to mark task as done\n" +
                 " For \"done\", kindly input task number behind\n" +
@@ -81,7 +82,8 @@ public class UI {
                 " eg. delete 2\n\n" +
                 "7.find\n Command used to search for tasks that contains certain keywords\n" +
                 " eg. find book\n\n" +
-                "8.bye\n Command used to exit program\n No additional info needed!");
+                "8.bye\n Command used to exit program\n No additional info needed!\n\n"+
+                "9.help\n Command used to list all available commands\n No additional info needed!");
     }
 
     public static void printWelcomeMessage() {
