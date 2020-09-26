@@ -18,13 +18,13 @@ Dude is here to help a brother out!
     + [1. Adding a Todo task: `todo`](#1-adding-a-todo-task-todo)
     + [2. Adding a Deadline task: `deadline`](#2-adding-a-deadline-task-deadline)
     + [3. Adding an Event task: `event`](#3-adding-an-event-task-event)
-    + [4. Listing all tasks at hand: `list`](#4-listing-all-tasks-at-hand--codelistcode)
-    + [5. Marking a task as complete: `done`](#5-marking-a-task-as-complete-codedonecode)
-    + [6. Deleting a task: `delete`](#6-deleting-a-task-codedeletecode)
-    + [7. Finding a task: `find`](#7-finding-a-task-codefindcode)
-    + [8. Exiting the program: `bye`](#8-exiting-the-program--codebyecode)
-    + [9. Listing available help: `help`](#9-listing-available-help--codebyecode)
-    + [10. Listing tasks due: `due`](#10-listing-tasks-due--codeduecode)
+    + [4. Listing all tasks at hand: `list`](#4-listing-all-tasks-at-hand-list)
+    + [5. Marking a task as complete: `done`](#5-marking-a-task-as-complete-done)
+    + [6. Deleting a task: `delete`](#6-deleting-a-task-delete)
+    + [7. Finding a task: `find`](#7-finding-a-task-find)
+    + [8. Exiting the program: `bye`](#8-exiting-the-program-bye)
+    + [9. Listing available help: `help`](#9-listing-available-help-help)
+    + [10. Listing tasks due: `due`](#10-listing-tasks-due-due)
 * [FAQ](#faq)
 * [Command Summary](#command-summary)
 
@@ -88,7 +88,7 @@ Got it. I've added this task:
 Now you have n tasks in the list
 ```
 
-### 4. Listing all tasks at hand : <code>list</code>
+### 4. Listing all tasks at hand: ```list```
 Lists all the current tasks at hand. <br>
 Example of usage: <code>list</code> <br>
 Expected outcome:
@@ -97,7 +97,7 @@ Expected outcome:
 2.[D][✘] CS2113T iP Submission (by: Oct 03 2020 23:59)
 3.[E][✘] Google Hackathon (on: Oct 27 2020 10:00)
 ```
-### 5. Marking a task as complete: <code>done</code>
+### 5. Marking a task as complete: ```done```
 Marks a user-specified task as done. <br>
 >Note: Index keyed in must be within the range of 1 - n, where n is number of existing tasks. <br>
 
@@ -109,7 +109,7 @@ Nice! I've marked this task as done:
 [✓] CS2113T Week 7 pre-lecture quiz
 ```
 
-### 6. Deleting a task: <code>delete</code>
+### 6. Deleting a task: ```delete```
 Deletes a user-specified task. <br>
 >Note: Index keyed in must be within the range of 1 - n, where n is number of existing tasks. <br>
 
@@ -122,7 +122,7 @@ Got it brother! I've removed this task:
  Now you have n tasks in the list.
 ```
 
-### 7. Finding a task: <code>find</code>
+### 7. Finding a task: ```find```
 Locates all instances of tasks that contains the user-specified keyword <br>
 >Note: The search is case-insensitive eg. `cs2113t` will match `CS2113T` <br>
 >
@@ -134,7 +134,7 @@ Here are the matches found!
  1. CS2113T iP Submission (by: Oct 03 2020 23:59)
 ```
 
-### 8. Exiting the program : <code>bye</code>
+### 8. Exiting the program: ```bye```
 Exits the program, triggering automatic saving of data <br>
 Example of usage: <code>bye</code> <br>
 Expected outcome:
@@ -143,7 +143,7 @@ Goodbye. Sad to see you leave!
  Hope to see you again soon!
 ```
 
-### 9. Listing available help : <code>bye</code>
+### 9. Listing available help: ```help```
 Lists a set of commands available to users <br>
 Example of usage: <code>help</code> <br>
 Expected outcome:
@@ -160,7 +160,7 @@ Here are the range of commands:
  No additional info needed!
 
 ```
-### 10. Listing tasks due : <code>due</code>
+### 10. Listing tasks due: ```due```
 Lists all tasks due on a user-specified date <br>
 >Note: use "today" to check tasks due today
 >
