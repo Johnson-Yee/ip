@@ -163,7 +163,7 @@ Here are the range of commands:
 ### 10. Listing tasks due: ```due```
 Lists all tasks due on a user-specified date <br>
 >Note: use "today" to check tasks due today
->
+
 Example of usage: <code>due <strong> 28/10/2020 </strong></code> or <code>due <strong> today </strong><br>
 Expected outcome:
 ```
