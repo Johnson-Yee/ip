@@ -1,17 +1,21 @@
 import Tasks.Task;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class UI {
 
 
-    public static void printMatchesFound(ArrayList<Task> matchesFound) {
+    public static void printMatchesFound(ArrayList<Task> matchesFound, String type) {
         if (matchesFound.size() == 0) {
             printSeparator();
             System.out.println("No matches found! Better luck next time!");
         } else {
             printSeparator();
-            System.out.println("Here are the match(es) found!");
+            String matchesFoundIntro = (type.equals("due")? "Here are the tasks due on the specified date!":
+                    "Here are the match(es) found!");
+            System.out.println(matchesFoundIntro);
             for (int i = 0; i < matchesFound.size(); i++) {
                 System.out.println(" " + (i + 1) + ". " + matchesFound.get(i).getDescription());
             }
@@ -21,9 +25,9 @@ public class UI {
 
     public static void printDeleteTaskMessage(int numOfTasks, int taskNum) {
         printSeparator();
-        System.out.println("Got it brother! I've removed this task: \n" + addBrackets(TaskList.currentTasks.get(taskNum - 1).getType())
-                + addBrackets(TaskList.currentTasks.get(taskNum - 1).getStatusIcon()) + " " + TaskList.currentTasks.get(taskNum - 1).getDescription() +
-                "\n Now you have " + (numOfTasks - 1) + ((numOfTasks - 1) < 2 ? " task" : " tasks") + " in the list.");
+        System.out.println("Got it brother! I've removed this task: \n" +
+                TaskList.styleOutput(taskNum-1) + "\n Now you have " + (numOfTasks - 1) +
+                ((numOfTasks - 1) < 2 ? " task" : " tasks") + " in the list.");
     }
 
     /**
@@ -33,9 +37,15 @@ public class UI {
      * @param description Task Description
      */
     public static void printTaskConfirmation(int numOfTasks, String description) {
-        System.out.println("Got it. I've added this task: \n" + "  " + addBrackets(TaskList.currentTasks.get(numOfTasks).getType())
-                + addBrackets(TaskList.currentTasks.get(numOfTasks).getStatusIcon()) + " " + description + "\n" + "Now you have "
-                + (numOfTasks + 1) + (numOfTasks == 0 ? " task" : " tasks") + " in the list");
+        System.out.println("Got it. I've added this task: \n" + "  "
+                + styleTypeAndStatus(numOfTasks) + " " + description + "\n"
+                + "Now you have " + (numOfTasks + 1) + (numOfTasks == 0 ? " task" : " tasks") + " in the list");
+    }
+
+    /*Add brackets to task type and status icon*/
+    private static String styleTypeAndStatus(int numOfTasks) {
+        return addBrackets(TaskList.currentTasks.get(numOfTasks).getType())
+                + addBrackets(TaskList.currentTasks.get(numOfTasks).getStatusIcon());
     }
 
     /**
@@ -49,17 +59,17 @@ public class UI {
         switch (type) {
         /*Print confirmation for DEADLINE*/
         case 'D':
-            System.out.println("Got it. I've added this task: \n" + "  " + addBrackets(TaskList.currentTasks.get(numOfTasks).getType())
-                    + addBrackets(TaskList.currentTasks.get(numOfTasks).getStatusIcon()) + " " + splitInfoAndDate[0] + " (by: " +
-                    reformattedDate + ")\n" + "Now you have " + (numOfTasks + 1) + (numOfTasks == 0 ? " task" : " tasks")
-                    + " in the list");
+            System.out.println("Got it. I've added this task: \n" + "  "
+                    + styleTypeAndStatus(numOfTasks) + " " + splitInfoAndDate[0]
+                    + " (by: " + reformattedDate + ")\n" + "Now you have " + (numOfTasks + 1) +
+                    (numOfTasks == 0 ? " task" : " tasks") + " in the list");
             break;
         /*Print confirmation for EVENT*/
         case 'E':
-            System.out.println("Got it. I've added this task: \n" + "  " + addBrackets(TaskList.currentTasks.get(numOfTasks).getType())
-                    + addBrackets(TaskList.currentTasks.get(numOfTasks).getStatusIcon()) + " " + splitInfoAndDate[0] + " (on: " +
-                    reformattedDate + ")\n" + "Now you have " + (numOfTasks + 1) + (numOfTasks == 0 ? " task" : " tasks")
-                    + " in the list");
+            System.out.println("Got it. I've added this task: \n" + "  " +
+                    styleTypeAndStatus(numOfTasks) + " " + splitInfoAndDate[0] +
+                    " (on: " + reformattedDate + ")\n" + "Now you have " + (numOfTasks + 1) +
+                    (numOfTasks == 0 ? " task" : " tasks") + " in the list");
             break;
         }
     }
@@ -87,6 +97,8 @@ public class UI {
     }
 
     public static void printWelcomeMessage() {
+        LocalDate todayDate = LocalDate.now();
+        String formattedDate = todayDate.format(DateTimeFormatter.ofPattern("dd MMM yyyy"));
         printSeparator();
         String logo = "           ____          ____       \n"
                 + " __(\")__  |  _ \\ _   _  |  _ \\  ____ \n"
@@ -95,6 +107,7 @@ public class UI {
                 + " (_/ \\_)  |____/ \\__,_| \\____/  \\____|\n";
         System.out.println(logo);
         System.out.println("Sup! I'm Dude!\nWhat can a brother do for you?");
+        System.out.println("Today is " + formattedDate);
         printSeparator();
     }
 
@@ -129,7 +142,7 @@ public class UI {
     }
 
     public static void printSeparator() {
-        String line = "__________________________________________________________________________________";
+        String line = "_____________________________________________________________________________________________";
         System.out.println(line);
     }
 }

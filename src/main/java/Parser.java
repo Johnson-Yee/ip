@@ -17,6 +17,7 @@ public class Parser {
     private static final String COMMAND_EVENT = "event";
     private static final String COMMAND_DELETE = "delete";
     private static final String COMMAND_FIND = "find";
+    private static final String COMMAND_DUE = "due";
 
     /*External classes used*/
     private static final Scanner input = new Scanner(System.in);
@@ -32,10 +33,11 @@ public class Parser {
         String userInput;
         while (isOngoing) {
             FileManager fileManager = new FileManager(Duke.FILE_NAME, Duke.FILE_DIR);
-
             userInput = getTrimmedUserInput();
             String[] splitUserInput = splitCommands(userInput);
             String userCommand = splitUserInput[0].toLowerCase();
+            String userParams = splitUserInput[1];
+
             switch (userCommand) {
             case COMMAND_BYE:
                 fileManager.saveFile(TaskList.currentTasks);
@@ -46,26 +48,30 @@ public class Parser {
                 TaskList.commandList(numOfTasks);
                 break;
             case COMMAND_DONE:
-                TaskList.commandDone(numOfTasks, splitUserInput[1]);
+                TaskList.commandDone(numOfTasks, userParams);
                 break;
             case COMMAND_DEADLINE:
-                numOfTasks = TaskList.commandDeadline(numOfTasks, splitUserInput[1]);
+                numOfTasks = TaskList.commandDeadline(numOfTasks, userParams);
                 break;
             case COMMAND_TODO:
-                numOfTasks = TaskList.commandToDo(numOfTasks, splitUserInput[1]);
+                numOfTasks = TaskList.commandToDo(numOfTasks, userParams);
                 break;
             case COMMAND_EVENT:
-                numOfTasks = TaskList.commandEvent(numOfTasks, splitUserInput[1]);
+                numOfTasks = TaskList.commandEvent(numOfTasks, userParams);
                 break;
             case COMMAND_DELETE:
-                numOfTasks = TaskList.commandDelete(numOfTasks, splitUserInput[1]);
+                numOfTasks = TaskList.commandDelete(numOfTasks, userParams);
                 break;
             case COMMAND_FIND:
-                ArrayList<Task> matchesFound = TaskList.commandFind(splitUserInput[1].toLowerCase());
-                UI.printMatchesFound(matchesFound);
+                ArrayList<Task> matchesFound = TaskList.commandFind(userParams.toLowerCase());
+                UI.printMatchesFound(matchesFound, COMMAND_FIND);
                 break;
             case COMMAND_HELP:
                 TaskList.commandHelp();
+                break;
+            case COMMAND_DUE:
+                ArrayList<Task> datesFound = TaskList.commandDue(userParams);
+                UI.printMatchesFound(datesFound, COMMAND_DUE);
                 break;
             default:
                 try {
@@ -78,13 +84,11 @@ public class Parser {
             }
         }
     }
-
     /*Function to get command from sentence and split sentence into 2*/
     private static String[] splitCommands(String userInput) {
         final String[] split = userInput.trim().split("\\s+", 2);
         return split.length == 2 ? split : new String[]{split[0], " "};
     }
-
     private static String getTrimmedUserInput() {
         String inputLine = input.nextLine();
         return inputLine.trim();

@@ -9,7 +9,6 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class TaskList {
 
@@ -43,16 +42,17 @@ public class TaskList {
             }
             String[] splitInfoAndDeadline = userInput.trim().split(DEADLINE_QUALIFIER, 2);
             String deadlineDescription = splitInfoAndDeadline[0];
-            String deadlineDate = formatDate(splitInfoAndDeadline[1].trim());
+            String deadlineDate =  formatDate(splitInfoAndDeadline[1].trim());
+
             /*If user input has no description*/
-            if (splitInfoAndDeadline[0].isEmpty()) {
+            if (deadlineDescription.isEmpty()) {
                 throw new DukeException("MISSING_DESCRIPTION");
             }
             /*If user input has no deadline*/
-            if (splitInfoAndDeadline[1].isEmpty()) {
+            if (deadlineDate.isEmpty()) {
                 throw new DukeException("MISSING_INFO");
             }
-            Deadline newDeadline = new Deadline(splitInfoAndDeadline[0], splitInfoAndDeadline[1]);
+            Deadline newDeadline = new Deadline(deadlineDescription, deadlineDate);
             currentTasks.add(newDeadline);
             UI.printSeparator();
             UI.printTaskConfirmation(numOfTasks, splitInfoAndDeadline, deadlineDate);
@@ -79,8 +79,7 @@ public class TaskList {
                 System.out.println("You have zero task at hand!");
             }
             for (int i = 0; i < numOfTasks; i++) {
-                System.out.println((i + 1) + "." + UI.addBrackets(currentTasks.get(i).getType()) +
-                        UI.addBrackets(currentTasks.get(i).getStatusIcon()) + " " + currentTasks.get(i).getDescription());
+                System.out.println((i + 1) + "." + styleOutput(i));
             }
             UI.printSeparator();
         } catch (ArrayIndexOutOfBoundsException error) {
@@ -89,7 +88,6 @@ public class TaskList {
             UI.printSeparator();
         }
     }
-
     /**
      * Adds a ToDo task to the currentTasks Task array
      *
@@ -190,7 +188,12 @@ public class TaskList {
             UI.printSeparator();
         }
     }
-
+    /**
+     * Find all occurences of tasks that fits a keyword
+     *
+     * @param stringToSearch user-specified keyword
+     * @return numberOfTasks Returns updated number of task
+     */
     public static ArrayList<Task> commandFind(String stringToSearch) {
         ArrayList<Task> resultArray = new ArrayList<>();
         for (int i = 0; i < currentTasks.size(); i++) {
@@ -200,6 +203,29 @@ public class TaskList {
             }
         }
         return resultArray;
+    }
+    /**
+     * Find all tasks before
+     *
+     * @param dateToSearch user-specified date
+     * @return numberOfTasks Returns updated number of task
+     */
+    public static ArrayList<Task> commandDue(String dateToSearch) throws DukeException {
+        ArrayList<Task> resultsArray = new ArrayList<>();
+        String reformattedDate;
+        LocalDate todayDate = LocalDate.now();
+        try {
+            if(dateToSearch.trim().equals("today")){
+                reformattedDate = formatDate(todayDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
+            }else {
+                reformattedDate = formatDate(dateToSearch.trim());
+            }
+            resultsArray = commandFind(reformattedDate.toLowerCase());
+        } catch (DukeException e) {
+            UI.printSeparator();
+            System.out.println(e.getMessage());
+        }
+        return resultsArray;
     }
 
     /**
@@ -274,7 +300,7 @@ public class TaskList {
      * @throws DukeException to catch error specified under DukeException
      */
     private static String formatDate(String rawDate) throws DukeException {
-        String finalEditedDate = new String();
+        String finalEditedDate;
         try {
             //Contains both date and time
             if (rawDate.trim().length() > 12) {
@@ -283,13 +309,10 @@ public class TaskList {
             } else {
                 finalEditedDate = reformatDate(rawDate);
             }
-        } catch (DukeException e) {
-            UI.printSeparator();
-            e.getMessage();
-            UI.printSeparator();
+
         } catch (DateTimeException | ArrayIndexOutOfBoundsException | NumberFormatException e) {
             throw new DukeException("INVALID_DATE");
-        }
+       }
         return finalEditedDate;
     }
 
@@ -328,7 +351,7 @@ public class TaskList {
     private static String reformatDateAndTime(String rawDateAndTime) throws DukeException {
         String intermediateDate;
         String intermediateTime;
-        String finalEditedDate;
+        String finalEditedDate ;
         LocalDateTime dateTime;
         LocalDateTime todayDateTime = LocalDateTime.now();
 
@@ -354,12 +377,20 @@ public class TaskList {
 
     /*Replace all occurrences of / or . in date given by user.*/
     private static String processDate(String originalDate) {
-        String processedDate = originalDate.replace('/', '-').replace('.', '-');
-        return processedDate;
+        return originalDate.replace('/', '-').replace('.', '-');
     }
 
+    public static String addCharAtIndex(String str, char ch, int position) {
+        return str.substring(0, position) + ch + str.substring(position);
+    }
+    /*Return styled output - task type and done indicators in brackets and description after*/
+    public static String styleOutput(int index) {
+        return  UI.addBrackets(currentTasks.get(index).getType()) +
+                UI.addBrackets(currentTasks.get(index).getStatusIcon()) + " "
+                + currentTasks.get(index).getDescription();
+    }
     /*Replace all occurrences of . in time given by user. Additionally, add a ':' when users do not include it*/
-    private static String processTime(String originalTime) {
+    static String processTime(String originalTime) {
         String processedTime;
         if (!originalTime.contains(":")) {
             processedTime = addCharAtIndex(originalTime, ':', 2);
@@ -367,10 +398,6 @@ public class TaskList {
             processedTime = originalTime.replace('.', ':');
         }
         return processedTime;
-    }
-
-    public static String addCharAtIndex(String str, char ch, int position) {
-        return str.substring(0, position) + ch + str.substring(position);
     }
 
     public int getSizeOfTaskList() {

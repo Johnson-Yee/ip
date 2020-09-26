@@ -24,6 +24,7 @@ Dude is here to help a brother out!
     + [7. Finding a task: `find`](#7-finding-a-task-codefindcode)
     + [8. Exiting the program: `bye`](#8-exiting-the-program--codebyecode)
     + [9. Listing available help: `help`](#9-listing-available-help--codebyecode)
+    + [10. Listing tasks due: `due`](#10-listing-tasks-due--codeduecode)
 * [FAQ](#faq)
 * [Command Summary](#command-summary)
 
@@ -93,7 +94,7 @@ Example of usage: <code>list</code> <br>
 Expected outcome:
 ```
 1.[T][✘] CS2113T Week 7 pre-lecture quiz
-2.[D][✘] CS2113T iP Submission (by:  03/10/2020 2359)
+2.[D][✘] CS2113T iP Submission (by: Oct 03 2020 23:59)
 3.[E][✘] Google Hackathon (on: Oct 27 2020 10:00)
 ```
 ### 5. Marking a task as complete: <code>done</code>
@@ -130,7 +131,7 @@ Example of usage: <code> find <strong> CS2113T </strong></code> <br>
 Expected outcome:
 ```
 Here are the matches found!
- 1. CS2113T iP Submission (by:  03/10/2020 2359)
+ 1. CS2113T iP Submission (by: Oct 03 2020 23:59)
 ```
 
 ### 8. Exiting the program : <code>bye</code>
@@ -159,6 +160,17 @@ Here are the range of commands:
  No additional info needed!
 
 ```
+### 10. Listing tasks due : <code>due</code>
+Lists all tasks due on a user-specified date <br>
+>Note: use "today" to check tasks due today
+>
+Example of usage: <code>due <strong> 28/10/2020 </strong></code> or <code>due <strong> today </strong><br>
+Expected outcome:
+```
+Here are the tasks due on the specified date!
+ 1. CS2113T iP Submissions (by: Oct 03 2020)
+
+```
 
 ## FAQ
 **Q:** The storage file is not created in the same folder as dude.jar. What shall I do?
@@ -185,3 +197,4 @@ delete | `delete` **task index** | `delete` **2**
 find | `find` **keyword** | `find` **cs2113t**
 bye | `bye` | `bye`
 help | `help` | `help`
+due | `due` | `due` **dd/mm/yyyy** OR `due` **today**
