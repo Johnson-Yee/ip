@@ -305,7 +305,7 @@ public class TaskList {
             //Contains both date and time
             if (rawDate.trim().length() > 12) {
                 finalEditedDate = reformatDateAndTime(rawDate);
-
+            //Contains just date
             } else {
                 finalEditedDate = reformatDate(rawDate);
             }
