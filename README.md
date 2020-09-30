@@ -1,26 +1,20 @@
-# Duke project template
+# Dude Task Scheduler
+```
+             ____          ____       
+   __(")__  |  _ \ _   _  |  _ \  ____ 
+  (__   __) | | | | | | | | | | || ___\
+    /   \   | |_| | |_| | | |_| |\  __/
+   (_/ \_)  |____/ \__,_| \____/  \____|
+  Sup! I'm Dude!
+  What can a brother do for you?
+```
+Dude is your friendly task scheduler that is able to maintain a todo list and
+schedule deadlines or events. It's named after the Java mascot _Duke_. <br>
 
-This is a project template for a greenfield Java project. It's named after the Java mascot _Duke_. Given below are instructions on how to use it.
+Dude is here to help a brother out!
 
-## Setting up in Intellij
 
-Prerequisites: JDK 11, update Intellij to the most recent version.
+## User guide
+The user guide can be found [here](https://johnson-yee.github.io/ip/) or 
+via the website: https://johnson-yee.github.io/ip/ .
 
-1. Open Intellij (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
-1. Set up the correct JDK version, as follows:
-   1. Click `Configure` > `Structure for New Projects` and then `Project Settings` > `Project` > `Project SDK`
-   1. If JDK 11 is listed in the drop down, select it. If it is not, click `New...` and select the directory where you installed JDK 11
-   1. Click `OK`
-1. Import the project into Intellij as follows:
-   1. Click `Open or Import`.
-   1. Select the project directory, and click `OK`
-   1. If there are any further prompts, accept the defaults.
-1. After the importing is complete, locate the `src/main/java/Duke.java` file, right-click it, and choose `Run Duke.main()`. If the setup is correct, you should see something like the below:
-   ```
-   Hello from
-    ____        _        
-   |  _ \ _   _| | _____ 
-   | | | | | | | |/ / _ \
-   | |_| | |_| |   <  __/
-   |____/ \__,_|_|\_\___|
-   ```

@@ -28,7 +28,6 @@ Dude is here to help a brother out!
 * [Command Summary](#command-summary)
 
 ## Quick Start
-
 1. Ensure that you have Java `11` or above installed in your computer.
 2. Download the latest `dude.jar` from [here](https://github.com/Johnson-Yee/ip/releases).
 3. Copy the file to the folder you want to use as the _home folder_ for dude.jar task scheduler.
@@ -38,8 +37,6 @@ Dude is here to help a brother out!
 7. Refer to [Features](#features) below for details of each command
 
 ## Features 
-
-
 >Notes about command format:  
 >
 >1. Words in **bold** are parameters to be provided by the user.
