@@ -18,6 +18,7 @@ public class TaskList {
 
     /*External classes used*/
     public static ArrayList<Task> currentTasks = new ArrayList<>();
+
     public TaskList(ArrayList<Task> loadUserList) {
         this.currentTasks = loadUserList;
     }
@@ -42,7 +43,7 @@ public class TaskList {
             }
             String[] splitInfoAndDeadline = userInput.trim().split(DEADLINE_QUALIFIER, 2);
             String deadlineDescription = splitInfoAndDeadline[0];
-            String deadlineDate =  formatDate(splitInfoAndDeadline[1].trim());
+            String deadlineDate = formatDate(splitInfoAndDeadline[1].trim());
 
             /*If user input has no description*/
             if (deadlineDescription.isEmpty()) {
@@ -88,6 +89,7 @@ public class TaskList {
             UI.printSeparator();
         }
     }
+
     /**
      * Adds a ToDo task to the currentTasks Task array
      *
@@ -188,6 +190,7 @@ public class TaskList {
             UI.printSeparator();
         }
     }
+
     /**
      * Find all occurences of tasks that fits a keyword
      *
@@ -204,6 +207,7 @@ public class TaskList {
         }
         return resultArray;
     }
+
     /**
      * Find all tasks due today or user specified date
      *
@@ -215,9 +219,9 @@ public class TaskList {
         String reformattedDate;
         LocalDate todayDate = LocalDate.now();
         try {
-            if(dateToSearch.trim().equals("today")){
+            if (dateToSearch.trim().equals("today")) {
                 reformattedDate = formatDate(todayDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy")));
-            }else {
+            } else {
                 reformattedDate = formatDate(dateToSearch.trim());
             }
             resultsArray = commandFind(reformattedDate.toLowerCase());
@@ -305,14 +309,14 @@ public class TaskList {
             //Contains both date and time
             if (rawDate.trim().length() > 12) {
                 finalEditedDate = reformatDateAndTime(rawDate);
-            //Contains just date
+                //Contains just date
             } else {
                 finalEditedDate = reformatDate(rawDate);
             }
 
         } catch (DateTimeException | ArrayIndexOutOfBoundsException | NumberFormatException e) {
             throw new DukeException("INVALID_DATE");
-       }
+        }
         return finalEditedDate;
     }
 
@@ -353,7 +357,7 @@ public class TaskList {
     private static String reformatDateAndTime(String rawDateAndTime) throws DukeException {
         String intermediateDate;
         String intermediateTime;
-        String finalEditedDate ;
+        String finalEditedDate;
         LocalDateTime dateTime;
         LocalDateTime todayDateTime = LocalDateTime.now();
 
@@ -385,12 +389,14 @@ public class TaskList {
     public static String addCharAtIndex(String str, char ch, int position) {
         return str.substring(0, position) + ch + str.substring(position);
     }
+
     /*Return styled output - task type and done indicators in brackets and description after*/
     public static String styleOutput(int index) {
-        return  UI.addBrackets(currentTasks.get(index).getType()) +
+        return UI.addBrackets(currentTasks.get(index).getType()) +
                 UI.addBrackets(currentTasks.get(index).getStatusIcon()) + " "
                 + currentTasks.get(index).getDescription();
     }
+
     /*Replace all occurrences of . in time given by user. Additionally, add a ':' when users do not include it*/
     public static String processTime(String originalTime) {
         String processedTime;
