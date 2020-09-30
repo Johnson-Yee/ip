@@ -5,8 +5,6 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 
 public class UI {
-
-
     public static void printMatchesFound(ArrayList<Task> matchesFound, String type) {
         if (matchesFound.size() == 0) {
             printSeparator();

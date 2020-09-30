@@ -16,8 +16,8 @@ public class TaskList {
     private static final String EVENT_QUALIFIER = "/on";
     private static final String DEADLINE_QUALIFIER = "/by";
 
+    /*External classes used*/
     public static ArrayList<Task> currentTasks = new ArrayList<>();
-
     public TaskList(ArrayList<Task> loadUserList) {
         this.currentTasks = loadUserList;
     }
@@ -205,7 +205,7 @@ public class TaskList {
         return resultArray;
     }
     /**
-     * Find all tasks before
+     * Find all tasks due today or user specified date
      *
      * @param dateToSearch user-specified date
      * @return numberOfTasks Returns updated number of task
@@ -229,7 +229,7 @@ public class TaskList {
     }
 
     /**
-     * Removes a task
+     * Removes a task from task list
      *
      * @param numOfTasks total number of tasks
      * @param number     task number
@@ -328,11 +328,13 @@ public class TaskList {
         String finalEditedDate;
         LocalDate date;
         LocalDate todayDate = LocalDate.now();
+
         intermediateDate = processDate(rawDate.trim());
         String[] dateComponents = intermediateDate.split("-");
         int year = Integer.parseInt(dateComponents[2]);
         int month = Integer.parseInt(dateComponents[1]);
         int day = Integer.parseInt(dateComponents[0]);
+
         date = LocalDate.of(year, month, day);
         if (date.isBefore(todayDate)) {
             throw new DukeException("SET_DATE_FAIL");
@@ -390,7 +392,7 @@ public class TaskList {
                 + currentTasks.get(index).getDescription();
     }
     /*Replace all occurrences of . in time given by user. Additionally, add a ':' when users do not include it*/
-    static String processTime(String originalTime) {
+    public static String processTime(String originalTime) {
         String processedTime;
         if (!originalTime.contains(":")) {
             processedTime = addCharAtIndex(originalTime, ':', 2);
