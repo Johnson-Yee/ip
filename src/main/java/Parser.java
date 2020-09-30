@@ -27,7 +27,7 @@ public class Parser {
      *
      * @param numOfTasks Number of tasks
      * @param isOngoing  Whether the program has yet to be exited
-     * @throws DukeException to catch error specified under DukeException
+     * @throws DukeException to catch errors specified under DukeException
      */
     public static void executeCommands(int numOfTasks, boolean isOngoing) throws DukeException, IOException {
         String userInput;
@@ -84,7 +84,12 @@ public class Parser {
             }
         }
     }
-    /*Function to get command from sentence and split sentence into 2*/
+    /**
+     * Split sentence to derive command and rest of the user input
+     *
+     * @param userInput String input keyed in by user
+     * @return String Array with two element: Command and the rest of the user input
+     */
     private static String[] splitCommands(String userInput) {
         final String[] split = userInput.trim().split("\\s+", 2);
         return split.length == 2 ? split : new String[]{split[0], " "};

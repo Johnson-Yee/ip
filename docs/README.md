@@ -1,15 +1,13 @@
 # User Guide
   ```
-             ____          ____       
-   __(")__  |  _ \ _   _  |  _ \  ____ 
-  (__   __) | | | | | | | | | | || ___\
-    /   \   | |_| | |_| | | |_| |\  __/
-   (_/ \_)  |____/ \__,_| \____/  \____|
+             ____        ____       
+   __(")__  |  _ \ _   _|  _ \ ____ 
+  (__   __) | | | | | | | | | | ___\
+    /   \   | |_| | |_| | |_| |\ __/
+   (_/ \_)  |____/ \__,_|\____/ \___|
   Sup! I'm Dude!
   What can a brother do for you?
 ```
-
-
 Dude is your friendly task scheduler that is able to maintain a todo list and
 schedule deadlines or events.
 Dude is here to help a brother out!
