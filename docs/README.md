@@ -62,7 +62,7 @@ Adds a new Todo task to Dude. <br>
 >To indicate date, '.' and '-' could be used in place of '/' eg. 28.05.2020 or 21/05/2020. <br>
 To indicate time, ':' could be omitted eg. 1800. <br>
 Note: The delimiter here is "**/by**", and it is compulsory to include it.
->
+
 Format: <code>deadline <strong>task description /by DD/MM/YYYY [HH:mm]</strong></code> <br>
 Example of usage: <code>deadline <strong>CS2113T iP Submission /by 03/10/2020 23:59</strong></code> <br>
 Expected outcome: 
@@ -77,7 +77,7 @@ Adds a new Event task to Dude. <br>
 >To indicate date, '.' and '-' could be used in place of '/' eg. 28.05.2020 or 21/05/2020. <br>
 To indicate time, ':' could be omitted eg. 1800. <br>
 Note: The delimiter here is "**/on**", and it is compulsory to include it.
->
+
 Format: <code>event <strong>task description /on DD/MM/YYYY [HH:mm]</strong></code> <br>
 Example of usage: <code>event <strong> Google Hackathon /on 27/10/2020 10:00</strong></code> <br>
 Expected outcome: 
@@ -124,7 +124,7 @@ Got it brother! I've removed this task:
 ### 7. Finding a task: <code>find</code>
 Locates all instances of tasks that contains the user-specified keyword <br>
 >Note: The search is case-insensitive eg. `cs2113t` will match `CS2113T` <br>
->
+
 Format: <code> find <strong>CS2113T</strong></code> <br>
 Example of usage: <code> find <strong> CS2113T </strong></code> <br>
 Expected outcome:
