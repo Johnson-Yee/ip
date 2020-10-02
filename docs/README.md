@@ -182,7 +182,7 @@ Follow this 3-step rectification: <br>
 ## Command Summary
 >Note: No additional parameter is needed if it is not mentioned. eg help <br>
 
-Action | Format | example
+Command | Format | Example
 --- | --- | ---
 todo | `todo` **task description** | `todo` **CS2113T Pre-lecture Quiz**
 deadline | `deadline` **task description /by dd/mm/yyyy [HH:mm]** | `deadline` **Complete CS quiz /by 20-10-2020**

@@ -2,7 +2,6 @@ import Exceptions.DukeException;
 import FileStorage.FileManager;
 
 import java.io.IOException;
-import java.time.LocalDate;
 
 public class Duke {
     public static final String FILE_NAME = "fileStorage.txt";

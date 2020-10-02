@@ -16,12 +16,8 @@ public class FileManager {
 
     public static String relativePath;
     public static ArrayList<Task> tasksList = new ArrayList<>();
-    private String fileName;
-    private String fileDir;
 
     public FileManager(String fileName, String fileDir) {
-        this.fileName = fileName;
-        this.fileDir = fileDir;
         relativePath = fileDir + '/' + fileName;
     }
 
