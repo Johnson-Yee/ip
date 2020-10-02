@@ -49,10 +49,6 @@ public class TaskList {
             if (deadlineDescription.isEmpty()) {
                 throw new DukeException("MISSING_DESCRIPTION");
             }
-            /*If user input has no deadline*/
-            if (deadlineDate.isEmpty()) {
-                throw new DukeException("MISSING_INFO");
-            }
             Deadline newDeadline = new Deadline(deadlineDescription, deadlineDate);
             currentTasks.add(newDeadline);
             UI.printSeparator();
@@ -89,7 +85,6 @@ public class TaskList {
             UI.printSeparator();
         }
     }
-
     /**
      * Adds a ToDo task to the currentTasks Task array
      *
@@ -145,10 +140,6 @@ public class TaskList {
             if (eventDescription.isEmpty()) {
                 throw new DukeException("MISSING_DESCRIPTION");
             }
-            /*If user input has no event date*/
-            if (eventDate.isEmpty()) {
-                throw new DukeException("MISSING_INFO");
-            }
             Event newEvent = new Event(eventDescription, eventDate);
             currentTasks.add(newEvent);
             UI.printSeparator();
@@ -186,7 +177,7 @@ public class TaskList {
             UI.printSeparator();
         } catch (NumberFormatException numberError) {
             UI.printSeparator();
-            System.out.println("Gosh you did not key in a valid number");
+            System.out.println(new DukeException("MISSING_NUMBER").getMessage());
             UI.printSeparator();
         }
     }
@@ -257,7 +248,7 @@ public class TaskList {
             UI.printSeparator();
         } catch (NumberFormatException numberError) {
             UI.printSeparator();
-            System.out.println("Gosh you did not key in a valid number");
+            System.out.println(new DukeException("MISSING_NUMBER").getMessage());
             UI.printSeparator();
         }
         return numOfTasks;
@@ -307,6 +298,10 @@ public class TaskList {
         String finalEditedDate;
         try {
             //Contains both date and time
+            /*If user input has no deadline*/
+            if (rawDate.isEmpty()) {
+                throw new DukeException("MISSING_DATE");
+            }
             if (rawDate.trim().length() > 12) {
                 finalEditedDate = reformatDateAndTime(rawDate);
                 //Contains just date

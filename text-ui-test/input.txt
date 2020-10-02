@@ -1,9 +1,20 @@
-deadline return book /by Sunday
-event project meeting /at Mon 2-4pm
 help
 list
-done 2
-list
-delete 2
-list
-bye
+todo
+hello
+event Google Hack on 18/10/2020 1800
+deadline do iP by 18/10/2020
+event /on 18/10/2020
+deadline /by 18/10/2020
+event hello /on 18102020
+deadline hello /on 18102020
+done
+done 4
+event eat dinner /on 18/08/2020
+deadline eat dinner /by 18/08/2020
+todo do CS2113T Tutorial 7
+deadline CS2113T iP submission /by 03/10/2020 2359
+event Google Hackathon /on 07/10/2020 15:00
+event Google Seminar /on 22.10-2020
+find Google
+due 22/10/2020
