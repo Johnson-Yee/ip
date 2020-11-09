@@ -14,7 +14,7 @@ schedule deadlines or events.
 Dude is here to help a brother out!
 * [Quick Start](#quick-start)
 * [Features](#Features)
-    + [1. Adding a Todo task: `todo`](https://johnson-yee.github.io/ip/#1-adding-a-todo-task-todo)
+    + [1. Adding a Todo task: `todo`](#1-adding-a-todo-task-todo)
     + [2. Adding a Deadline task: `deadline`](#2-adding-a-deadline-task-deadline)
     + [3. Adding an Event task: `event`](#3-adding-an-event-task-event)
     + [4. Listing all tasks at hand: `list`](#4-listing-all-tasks-at-hand-list)
